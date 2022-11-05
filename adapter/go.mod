@@ -1,4 +1,4 @@
-module github.com/wso2/apk/adapter
+module github.com/AmaliMatharaarachchi/apk/adapter
 
 go 1.19
 

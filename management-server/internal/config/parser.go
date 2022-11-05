@@ -23,9 +23,9 @@ import (
 	"reflect"
 	"sync"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
 	toml "github.com/pelletier/go-toml"
 	logger "github.com/sirupsen/logrus"
-	"github.com/wso2/AmaliMatharaarachchi/adapter/pkg/config"
 )
 
 var (

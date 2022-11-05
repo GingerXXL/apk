@@ -21,8 +21,8 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/wso2/AmaliMatharaarachchi/APKManagementServer/internal/logger"
-	"github.com/wso2/AmaliMatharaarachchi/APKManagementServer/internal/xds"
+	"github.com/AmaliMatharaarachchi/apk/APKManagementServer/internal/logger"
+	"github.com/AmaliMatharaarachchi/apk/APKManagementServer/internal/xds"
 )
 
 func main() {

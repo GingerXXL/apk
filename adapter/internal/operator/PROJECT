@@ -2,7 +2,7 @@ domain: wso2.com
 layout:
 - go.kubebuilder.io/v4-alpha
 projectName: operator
-repo: github.com/wso2/apk/adapter/internal/operator
+repo: github.com/AmaliMatharaarachchi/apk/adapter/internal/operator
 resources:
 - api:
     crdVersion: v1
@@ -11,6 +11,6 @@ resources:
   domain: wso2.com
   group: dp
   kind: API
-  path: github.com/wso2/apk/adapter/internal/operator/api/v1alpha1
+  path: github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/api/v1alpha1
   version: v1alpha1
 version: "3"

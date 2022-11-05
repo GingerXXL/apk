@@ -1,4 +1,4 @@
-module github.com/wso2/AmaliMatharaarachchi/APKManagementServer
+module github.com/AmaliMatharaarachchi/apk/APKManagementServer
 
 go 1.19
 
@@ -6,7 +6,7 @@ require (
 	github.com/envoyproxy/go-control-plane v0.10.3
 	github.com/pelletier/go-toml v1.8.1
 	github.com/sirupsen/logrus v1.9.0
-	github.com/wso2/AmaliMatharaarachchi/adapter v0.0.0-20221104033119-c4317ad4168b
+	github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221104033119-c4317ad4168b
 	google.golang.org/grpc v1.50.1
 )
 
