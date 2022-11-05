@@ -21,8 +21,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/config"
 	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
 

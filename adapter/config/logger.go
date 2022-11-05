@@ -18,13 +18,13 @@
 package config
 
 import (
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/logging"
 )
 
 // package name constants
 const (
-	pkgConfig = "github.com/wso2/apk/adapter/config"
+	pkgConfig = "github.com/AmaliMatharaarachchi/apk/adapter/config"
 )
 
 // logger package references

@@ -1,7 +1,7 @@
 # The logging configuration file for APK Agent
 ######### root Level ########
 logfile = "logs/adapter.log"
-logLevel = "INFO"
+logLevel = "DEBG"
 
 [rotation]
 MaxSize = 10    #megabytes
@@ -12,6 +12,6 @@ Compress = true
 ######### package Level ############
 # LogLevels = "DEBG", "FATL", "ERRO", "WARN", "INFO", "PANC"
 
-[[pkg]]
-name = "github.com/wso2/AmaliMatharaarachchi/APKAgent/xds"
-logLevel = "INFO"
+# [[pkg]]
+# name = "github.com/AmaliMatharaarachchi/APKAgent/xds"
+# logLevel = "INFO"

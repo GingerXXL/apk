@@ -24,8 +24,8 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
 	logrus "github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/config"
 )
 
 type plainFormatter struct {

@@ -22,15 +22,15 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/config"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
 	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	discovery "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	"github.com/golang/protobuf/ptypes"
-	"github.com/wso2/apk/adapter/config"
-	"github.com/wso2/apk/adapter/internal/loggers"
 
-	apkmgt_model "github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
-	stub "github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/service/apkmgt"
-	"github.com/wso2/apk/adapter/pkg/logging"
+	apkmgt_model "github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
+	stub "github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/service/apkmgt"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 
 	"google.golang.org/genproto/googleapis/rpc/status"
 	"google.golang.org/grpc"

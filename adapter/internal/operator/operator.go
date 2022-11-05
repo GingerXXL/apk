@@ -20,9 +20,9 @@ import (
 	"flag"
 	"os"
 
-	"github.com/wso2/apk/adapter/internal/loggers"
-	"github.com/wso2/apk/adapter/internal/operator/controllers"
-	"github.com/wso2/apk/adapter/internal/operator/synchronizer"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/controllers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/synchronizer"
 	gwapiv1a2 "sigs.k8s.io/gateway-api/apis/v1alpha2"
 	gwapiv1b1 "sigs.k8s.io/gateway-api/apis/v1beta1"
 
@@ -37,7 +37,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/healthz"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	dpv1alpha1 "github.com/wso2/apk/adapter/internal/operator/api/v1alpha1"
+	dpv1alpha1 "github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/api/v1alpha1"
 	//+kubebuilder:scaffold:imports
 )
 

@@ -18,7 +18,7 @@
 package synchronizer
 
 import (
-	"github.com/wso2/apk/adapter/internal/loggers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
 )
 
 type APIEvent struct {

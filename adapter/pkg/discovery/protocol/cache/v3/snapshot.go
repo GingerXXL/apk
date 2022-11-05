@@ -17,10 +17,10 @@ package cache
 import (
 	"errors"
 
+	wso2_types "github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/protocol/cache/types"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/protocol/resource/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/cache/types"
 	envoy_cache "github.com/envoyproxy/go-control-plane/pkg/cache/v3"
-	wso2_types "github.com/wso2/apk/adapter/pkg/discovery/protocol/cache/types"
-	"github.com/wso2/apk/adapter/pkg/discovery/protocol/resource/v3"
 )
 
 // Snapshot is an internally consistent snapshot of xDS resources.

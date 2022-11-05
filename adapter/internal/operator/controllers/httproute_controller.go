@@ -20,8 +20,8 @@ package controllers
 import (
 	"context"
 
-	"github.com/wso2/apk/adapter/internal/loggers"
-	"github.com/wso2/apk/adapter/internal/operator/synchronizer"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/synchronizer"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller"

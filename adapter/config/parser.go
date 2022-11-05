@@ -28,10 +28,10 @@ import (
 	"strings"
 	"sync"
 
+	pkgconf "github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 	toml "github.com/pelletier/go-toml"
 	logger "github.com/sirupsen/logrus"
-	pkgconf "github.com/wso2/apk/adapter/pkg/config"
-	"github.com/wso2/apk/adapter/pkg/logging"
 )
 
 var (

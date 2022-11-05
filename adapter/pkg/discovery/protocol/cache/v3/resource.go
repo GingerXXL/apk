@@ -17,15 +17,15 @@ package cache
 import (
 	"fmt"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/api"
+	apkmgt "github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/config/enforcer"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/keymgt"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/subscription"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/api/wso2/discovery/throttle"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/protocol/cache/types"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/protocol/resource/v3"
 	envoy_types "github.com/envoyproxy/go-control-plane/pkg/cache/types"
-	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/api"
-	apkmgt "github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
-	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/config/enforcer"
-	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/keymgt"
-	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/subscription"
-	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/throttle"
-	"github.com/wso2/apk/adapter/pkg/discovery/protocol/cache/types"
-	"github.com/wso2/apk/adapter/pkg/discovery/protocol/resource/v3"
 )
 
 // GetResponseType returns the enumeration for a valid xDS type URL

@@ -20,8 +20,8 @@
 package loggers
 
 import (
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/logging"
 )
 
 /* loggers should be initiated only for the main packages
@@ -32,10 +32,10 @@ When you add a new logger instance add the related package name as a constant
 
 // package name constants
 const (
-	apkOperator             = "github.com/wso2/apk/adapter/internal/operator"
-	pkgEnforcerXdsCallbacks = "github.com/wso2/apk/adapter/internal/discovery/xds/enforcercallbacks"
-	pkgRouterXdsCallbacks   = "github.com/wso2/apk/adapter/internal/discovery/xds/routercallbacks"
-	pkgXds                  = "github.com/wso2/apk/adapter/internal/discovery/xds"
+	apkOperator             = "github.com/AmaliMatharaarachchi/apk/adapter/internal/operator"
+	pkgEnforcerXdsCallbacks = "github.com/AmaliMatharaarachchi/apk/adapter/internal/discovery/xds/enforcercallbacks"
+	pkgRouterXdsCallbacks   = "github.com/AmaliMatharaarachchi/apk/adapter/internal/discovery/xds/routercallbacks"
+	pkgXds                  = "github.com/AmaliMatharaarachchi/apk/adapter/internal/discovery/xds"
 )
 
 // logger package references

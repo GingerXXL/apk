@@ -27,15 +27,15 @@ import (
 
 	corev3 "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/cache/types"
-	"github.com/wso2/apk/APKManagementServer/internal/config"
-	"github.com/wso2/apk/APKManagementServer/internal/logger"
-	"github.com/wso2/apk/APKManagementServer/internal/xds/callbacks"
-	apkmgt_application "github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
-	apkmgt_service "github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/service/apkmgt"
-	wso2_cache "github.com/wso2/apk/adapter/pkg/discovery/protocol/cache/v3"
-	wso2_resource "github.com/wso2/apk/adapter/pkg/discovery/protocol/resource/v3"
-	wso2_server "github.com/wso2/apk/adapter/pkg/discovery/protocol/server/v3"
-	"github.com/wso2/apk/adapter/pkg/logging"
+	"github.com/wso2/AmaliMatharaarachchi/APKManagementServer/internal/config"
+	"github.com/wso2/AmaliMatharaarachchi/APKManagementServer/internal/logger"
+	"github.com/wso2/AmaliMatharaarachchi/APKManagementServer/internal/xds/callbacks"
+	apkmgt_application "github.com/wso2/AmaliMatharaarachchi/adapter/pkg/discovery/api/wso2/discovery/apkmgt"
+	apkmgt_service "github.com/wso2/AmaliMatharaarachchi/adapter/pkg/discovery/api/wso2/discovery/service/apkmgt"
+	wso2_cache "github.com/wso2/AmaliMatharaarachchi/adapter/pkg/discovery/protocol/cache/v3"
+	wso2_resource "github.com/wso2/AmaliMatharaarachchi/adapter/pkg/discovery/protocol/resource/v3"
+	wso2_server "github.com/wso2/AmaliMatharaarachchi/adapter/pkg/discovery/protocol/server/v3"
+	"github.com/wso2/AmaliMatharaarachchi/adapter/pkg/logging"
 	"google.golang.org/grpc"
 )
 
@@ -69,7 +69,7 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-//FeedData mock data
+// FeedData mock data
 func FeedData() {
 	logger.LoggerXdsServer.Debug("adding mock data")
 	version := rand.Intn(maxRandomInt)

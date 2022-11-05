@@ -163,8 +163,8 @@ github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.7.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/stretchr/testify v1.8.1 h1:w7B6lhMri9wdJUVmEZPGGhZzrYTPvgJArz7wNPgYKsk=
-github.com/wso2/apk/adapter v0.0.0-20221104033119-c4317ad4168b h1:4X3lDB6cXbjmBmqg0Fh1vuukoIfDjTj4reYxw2O9rRg=
-github.com/wso2/apk/adapter v0.0.0-20221104033119-c4317ad4168b/go.mod h1:xHGC8AZ4sEdSiKoA1yY6qCpGwLOWcGqYTRBAHhD7Hf4=
+github.com/wso2/AmaliMatharaarachchi/adapter v0.0.0-20221104033119-c4317ad4168b h1:4X3lDB6cXbjmBmqg0Fh1vuukoIfDjTj4reYxw2O9rRg=
+github.com/wso2/AmaliMatharaarachchi/adapter v0.0.0-20221104033119-c4317ad4168b/go.mod h1:xHGC8AZ4sEdSiKoA1yY6qCpGwLOWcGqYTRBAHhD7Hf4=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

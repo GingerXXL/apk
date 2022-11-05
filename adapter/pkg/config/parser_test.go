@@ -22,9 +22,9 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/config"
+	pkgconf "github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
 	"github.com/stretchr/testify/assert"
-	"github.com/wso2/apk/adapter/config"
-	pkgconf "github.com/wso2/apk/adapter/pkg/config"
 )
 
 func TestMain(m *testing.M) {

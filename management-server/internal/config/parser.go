@@ -25,7 +25,7 @@ import (
 
 	toml "github.com/pelletier/go-toml"
 	logger "github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/config"
+	"github.com/wso2/AmaliMatharaarachchi/adapter/pkg/config"
 )
 
 var (
@@ -34,7 +34,7 @@ var (
 	managementServerConfig *Config
 )
 
-//constants related to utility functions
+// constants related to utility functions
 const (
 	// RelativeConfigPath is the relative file path where the configuration file is.
 	relativeConfigPath = "/conf/ga_config.toml"

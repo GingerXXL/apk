@@ -20,8 +20,8 @@
 package loggers
 
 import (
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/logging"
 )
 
 /* loggers should be initiated only for the main packages
@@ -32,7 +32,7 @@ When you add a new logger instance add the related package name as a constant
 
 // package name constants
 const (
-	pkgAuth = "github.com/wso2/apk/adapter/pkg/auth"
+	pkgAuth = "github.com/AmaliMatharaarachchi/apk/adapter/pkg/auth"
 )
 
 // logger package references

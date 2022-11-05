@@ -21,7 +21,7 @@ package logger
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/logging"
+	"github.com/wso2/AmaliMatharaarachchi/adapter/pkg/logging"
 )
 
 /* loggers should be initiated only for the main packages
@@ -32,9 +32,9 @@ When you add a new logger instance add the related package name as a constant
 
 // package name constants
 const (
-	pkgServer    = "github.com/wso2/apk/APKManagementServer"
-	pkgXds       = "github.com/wso2/apk/APKManagementServer/xds"
-	pkgXdsServer = "github.com/wso2/apk/APKManagementServer/xds/server"
+	pkgServer    = "github.com/wso2/AmaliMatharaarachchi/APKManagementServer"
+	pkgXds       = "github.com/wso2/AmaliMatharaarachchi/APKManagementServer/xds"
+	pkgXdsServer = "github.com/wso2/AmaliMatharaarachchi/APKManagementServer/xds/server"
 )
 
 // logger package references

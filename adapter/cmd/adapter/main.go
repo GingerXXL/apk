@@ -21,8 +21,8 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/xds"
 	logger "github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/internal/xds"
 )
 
 // invokes the code from the /internal and /pkg directories and nothing else.

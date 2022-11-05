@@ -24,13 +24,13 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/discovery/protocol/resource/v3"
 	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	discovery "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/cache/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/server/sotw/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/server/stream/v3"
 	streamv3 "github.com/envoyproxy/go-control-plane/pkg/server/stream/v3"
-	"github.com/wso2/apk/adapter/pkg/discovery/protocol/resource/v3"
 )
 
 // NewServer creates handlers from a config watcher and callbacks.

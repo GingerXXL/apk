@@ -22,8 +22,8 @@ import (
 	"io"
 	"os"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/config"
 	"github.com/sirupsen/logrus"
-	"github.com/wso2/apk/adapter/pkg/config"
 )
 
 // ErrorDetails used to keep error details for error logs

@@ -20,9 +20,9 @@ package controllers
 import (
 	"context"
 
-	"github.com/wso2/apk/adapter/internal/loggers"
-	"github.com/wso2/apk/adapter/internal/operator/synchronizer"
-	"github.com/wso2/apk/adapter/internal/operator/utils"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/synchronizer"
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/utils"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/controller"
 	"sigs.k8s.io/controller-runtime/pkg/handler"
@@ -34,7 +34,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
-	dpv1alpha1 "github.com/wso2/apk/adapter/internal/operator/api/v1alpha1"
+	dpv1alpha1 "github.com/AmaliMatharaarachchi/apk/adapter/internal/operator/api/v1alpha1"
 )
 
 // APIReconciler reconciles a API object

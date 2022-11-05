@@ -21,10 +21,10 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/AmaliMatharaarachchi/apk/adapter/internal/discovery/xds/common"
+	logger "github.com/AmaliMatharaarachchi/apk/adapter/internal/loggers"
+	"github.com/AmaliMatharaarachchi/apk/adapter/pkg/logging"
 	discovery "github.com/envoyproxy/go-control-plane/envoy/service/discovery/v3"
-	"github.com/wso2/apk/adapter/internal/discovery/xds/common"
-	logger "github.com/wso2/apk/adapter/internal/loggers"
-	"github.com/wso2/apk/adapter/pkg/logging"
 )
 
 var nodeQueueInstance *common.NodeQueue
