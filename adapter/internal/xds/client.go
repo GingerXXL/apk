@@ -89,6 +89,7 @@ func initConnection(xdsURL string) error {
 }
 
 func watchApplications() {
+	loggers.LoggerXds.Debug("Watching application updates ...")
 	for {
 		discoveryResponse, err := xdsStream.Recv()
 		if err == io.EOF {
@@ -192,6 +193,6 @@ func addApplicationsToChannel(resp *discovery.DiscoveryResponse) {
 			})
 			continue
 		}
-		loggers.LoggerXds.Debug("client has received: ", res)
+		loggers.LoggerXds.Info("client has received: ", res)
 	}
 }

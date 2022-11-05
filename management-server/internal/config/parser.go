@@ -37,7 +37,7 @@ var (
 // constants related to utility functions
 const (
 	// RelativeConfigPath is the relative file path where the configuration file is.
-	relativeConfigPath = "/conf/ga_config.toml"
+	relativeConfigPath = "/conf/config.toml"
 )
 
 // ReadConfigs implements adapter configuration read operation. The read operation will happen only once, hence

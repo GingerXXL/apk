@@ -30,6 +30,6 @@ const (
 	KeyManagerConfig
 	RevokedTokens
 	ThrottleData
-	APKMgtApplicationList
+	APKMgtApplication
 	UnknownType // token to count the total number of supported types
 )

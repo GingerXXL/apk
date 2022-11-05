@@ -54,7 +54,7 @@ func GetResponseType(typeURL string) types.ResponseType {
 	case resource.ThrottleDataType:
 		return types.ThrottleData
 	case resource.APKMgtApplicationType:
-		return types.APKMgtApplicationList
+		return types.APKMgtApplication
 	}
 	return types.UnknownType
 }
