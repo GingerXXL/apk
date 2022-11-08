@@ -1,6 +1,6 @@
 module github.com/AmaliMatharaarachchi/apk/APKManagementServer
 
-go 1.19
+go 1.18
 
 require (
 	github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221105114436-8dea4b9dd061
