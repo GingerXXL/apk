@@ -1,6 +1,6 @@
 module github.com/AmaliMatharaarachchi/apk/adapter
 
-go 1.18
+go 1.19
 
 require (
 	github.com/cncf/udpa/go v0.0.0-20210930031921-04548b0d99d4
