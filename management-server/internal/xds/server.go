@@ -71,18 +71,21 @@ func init() {
 
 // FeedData mock data
 func FeedData() {
-	logger.LoggerXdsServer.Debug("adding mock data")
-	version := rand.Intn(maxRandomInt)
-	applications := apkmgt_application.Application{
-		Uuid: "apiUUID1",
-		Name: "name1",
+	for {
+		logger.LoggerXdsServer.Debug("adding mock data")
+		version := rand.Intn(maxRandomInt)
+		applications := apkmgt_application.Application{
+			Uuid: "apiUUID1",
+			Name: "name1",
+		}
+		newSnapshot, _ := wso2_cache.NewSnapshot(fmt.Sprint(version), map[wso2_resource.Type][]types.Resource{
+			wso2_resource.APKMgtApplicationType: {&applications},
+		})
+		apiCacheMutex.Lock()
+		apiCache.SetSnapshot(context.Background(), "mine", newSnapshot)
+		apiCacheMutex.Unlock()
+		time.Sleep(1 * time.Minute)
 	}
-	newSnapshot, _ := wso2_cache.NewSnapshot(fmt.Sprint(version), map[wso2_resource.Type][]types.Resource{
-		wso2_resource.APKMgtApplicationType: {&applications},
-	})
-	apiCacheMutex.Lock()
-	apiCache.SetSnapshot(context.Background(), "mine", newSnapshot)
-	apiCacheMutex.Unlock()
 }
 
 func InitAPKMgtServer() {

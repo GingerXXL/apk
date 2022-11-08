@@ -24,7 +24,6 @@ import (
 	"github.com/envoyproxy/go-control-plane/pkg/cache/types"
 	envoy_cache "github.com/envoyproxy/go-control-plane/pkg/cache/v3"
 	"github.com/envoyproxy/go-control-plane/pkg/log"
-	"github.com/envoyproxy/go-control-plane/pkg/server/stream/v3"
 )
 
 // SnapshotCache is a snapshot-based cache that maintains a single versioned
@@ -291,7 +290,7 @@ func superset(names map[string]bool, resources map[string]types.ResourceWithTTL)
 }
 
 // CreateWatch returns a watch for an xDS request.
-func (cache *snapshotCache) CreateWatch(request *envoy_cache.Request, streamState stream.StreamState, value chan envoy_cache.Response) func() {
+func (cache *snapshotCache) CreateWatch(request *envoy_cache.Request, streamState sotw.StreamState, value chan envoy_cache.Response) func() {
 	nodeID := cache.hash.ID(request.Node)
 
 	cache.mu.Lock()
@@ -428,14 +427,14 @@ func createResponse(ctx context.Context, request *envoy_cache.Request, resources
 
 // CreateDeltaWatch returns a watch for a delta xDS request which implements the Simple SnapshotCache.
 // Unused in adapter implementation.
-func (cache *snapshotCache) CreateDeltaWatch(request *envoy_cache.DeltaRequest, state stream.StreamState, value chan envoy_cache.DeltaResponse) func() {
+func (cache *snapshotCache) CreateDeltaWatch(request *envoy_cache.DeltaRequest, state sotw.StreamState, value chan envoy_cache.DeltaResponse) func() {
 
 	return nil
 }
 
 // Respond to a delta watch with the provided snapshot value. If the response is nil, there has been no state change.
 // Unused in adapter implementation.
-func (cache *snapshotCache) respondDelta(ctx context.Context, snapshot *Snapshot, request *envoy_cache.DeltaRequest, value chan envoy_cache.DeltaResponse, state stream.StreamState) (*envoy_cache.RawDeltaResponse, error) {
+func (cache *snapshotCache) respondDelta(ctx context.Context, snapshot *Snapshot, request *envoy_cache.DeltaRequest, value chan envoy_cache.DeltaResponse, state sotw.StreamState) (*envoy_cache.RawDeltaResponse, error) {
 	return nil, nil
 }
 

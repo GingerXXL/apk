@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/cncf/udpa/go v0.0.0-20210930031921-04548b0d99d4
-	github.com/envoyproxy/go-control-plane v0.10.3
+	github.com/envoyproxy/go-control-plane v0.10.2-0.20220325020618-49ff273808a1
 	github.com/golang/protobuf v1.5.2
 	github.com/onsi/ginkgo/v2 v2.1.4
 	github.com/onsi/gomega v1.19.0

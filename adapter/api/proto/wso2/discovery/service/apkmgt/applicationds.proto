@@ -32,3 +32,6 @@ service APKMgtDiscoveryService {
       returns (stream envoy.service.discovery.v3.DiscoveryResponse) {
   }
 }
+
+  rpc FetchAPKMgtApplications(envoy.service.discovery.v3.DiscoveryRequest) returns (envoy.service.discovery.v3.DiscoveryResponse) {
+  }

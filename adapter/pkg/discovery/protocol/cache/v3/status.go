@@ -20,7 +20,6 @@ import (
 
 	core "github.com/envoyproxy/go-control-plane/envoy/config/core/v3"
 	envoy_cache "github.com/envoyproxy/go-control-plane/pkg/cache/v3"
-	"github.com/envoyproxy/go-control-plane/pkg/server/stream/v3"
 )
 
 // NodeHash computes string identifiers for Envoy nodes.
@@ -129,7 +128,7 @@ func (info *statusInfo) GetLastDeltaWatchRequestTime() time.Time {
 }
 
 // GetDeltaStreamState will pull the stream state with the version map out of a specific watch
-func (info *statusInfo) GetDeltaStreamState(watchID int64) stream.StreamState {
+func (info *statusInfo) GetDeltaStreamState(watchID int64) sotw.StreamState {
 	info.mu.RLock()
 	defer info.mu.RUnlock()
 	return info.deltaWatches[watchID].StreamState
