@@ -31,8 +31,8 @@ cloud.google.com/go/storage v1.6.0/go.mod h1:N7U0C8pVQ/+NIKOBQyamJIeKQKkZ+mxpohl
 cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RXyy7KQOVs=
 cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
-github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108032934-324ced5c12ec h1:bHqSeazHiqhnMM3Ags9GGz8hd4w/PRLKnSZ+PZhrdw0=
-github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108032934-324ced5c12ec/go.mod h1:ZZdghpQoC8sbqB3LA6AVBNJY6479jiDTjbZC2Q+TW5M=
+github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108033922-5501b1b36333 h1:uePI7C/RC543mkc/puUeKXbhXI4W6MBU83HEQQ12+Po=
+github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108033922-5501b1b36333/go.mod h1:UwPE3Feee3rV97JoEMU+Q+dWSK6mcE64KbZ3pMZRT/0=
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
