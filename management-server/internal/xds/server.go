@@ -71,27 +71,26 @@ func init() {
 
 // FeedData mock data
 func FeedData() {
-	for {
-		logger.LoggerXdsServer.Debug("adding mock data")
-		version := rand.Intn(maxRandomInt)
-		applications := apkmgt_application.Application{
-			Uuid: "apiUUID1",
-			Name: "name1",
-		}
-		newSnapshot, _ := wso2_cache.NewSnapshot(fmt.Sprint(version), map[wso2_resource.Type][]types.Resource{
-			wso2_resource.APKMgtApplicationType: {&applications},
-		})
-		apiCacheMutex.Lock()
-		apiCache.SetSnapshot(context.Background(), "mine", newSnapshot)
-		apiCacheMutex.Unlock()
-		time.Sleep(1 * time.Minute)
+	logger.LoggerXdsServer.Debug("adding mock data")
+	version := rand.Intn(maxRandomInt)
+	applications := apkmgt_application.Application{
+		Uuid: "apiUUID1",
+		Name: "name1",
 	}
+	newSnapshot, _ := wso2_cache.NewSnapshot(fmt.Sprint(version), map[wso2_resource.Type][]types.Resource{
+		wso2_resource.APKMgtApplicationType: {&applications},
+	})
+	apiCacheMutex.Lock()
+	apiCache.SetSnapshot(context.Background(), "mine", newSnapshot)
+	apiCacheMutex.Unlock()
+	time.Sleep(1 * time.Minute)
+
 }
 
 func InitAPKMgtServer() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
-	apiCache := wso2_cache.NewSnapshotCache(false, IDHash{}, nil)
+	// apiCache := wso2_cache.NewSnapshotCache(false, IDHash{}, nil)
 	apkMgtAPIDsSrv := wso2_server.NewServer(ctx, apiCache, &callbacks.Callbacks{})
 
 	var grpcOptions []grpc.ServerOption

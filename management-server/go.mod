@@ -3,7 +3,7 @@ module github.com/AmaliMatharaarachchi/apk/APKManagementServer
 go 1.18
 
 require (
-	github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108034356-57efeeaf6371
+	github.com/AmaliMatharaarachchi/apk/adapter v0.0.0-20221108034547-8eb5ef28c03d
 	github.com/envoyproxy/go-control-plane v0.10.3
 	github.com/pelletier/go-toml v1.8.1
 	github.com/sirupsen/logrus v1.9.0
