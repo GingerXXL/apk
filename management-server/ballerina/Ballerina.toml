@@ -1,5 +1,5 @@
 [package]
-org = "amali"
+org = "wso2.apk"
 name = "ballerina"
 version = "0.1.0"
 distribution = "2201.2.3"
