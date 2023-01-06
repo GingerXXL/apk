@@ -34,16 +34,17 @@ release {
 
 task build{
     dependsOn("resources:build")
+    finalizedBy docker_build
 }
 
 allprojects {
     group = project.group
     version = project.version
+    apply from: "$rootDir/../../common-gradle-scripts/docker.gradle"
 }
 
 subprojects {
     apply from: "$rootDir/../../common-gradle-scripts/java.gradle"
-    apply from: "$rootDir/../../common-gradle-scripts/docker.gradle"
 }
 
 afterReleaseBuild.dependsOn "docker_push"
