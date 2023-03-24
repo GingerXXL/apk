@@ -5,6 +5,7 @@ metadata:
   annotations:
     cert-manager.io/issuer: selfsigned-issuer
 spec:
+# todo(amali) check if this is needed
   gatewayClassName: {{ .Values.wso2.apk.dp.gateway.name }}
   listeners:
     - name: {{ .Values.wso2.apk.dp.gateway.listener.name}}
@@ -17,6 +18,7 @@ spec:
           - kind: Secret
             group: ""
             name: default-example-com-cert
+  #todo(amali) we need to parametrize this
     - name: apilistener
       hostname: "*.api.am.wso2.com"
       port: 9090
