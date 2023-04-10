@@ -23,7 +23,7 @@ import (
 	"regexp"
 	"sort"
 
-	"github.com/wso2/apk/adapter/internal/oasparser/constants"
+	"github.com/wso2/apk/adapter/pkg/discovery/api/wso2/discovery/api"
 	gwapiv1b1 "sigs.k8s.io/gateway-api/apis/v1beta1"
 )
 
@@ -38,12 +38,20 @@ import (
 type Resource struct {
 	path             string
 	pathMatchType    gwapiv1b1.PathMatchType
-	methods          []*Operation
 	iD               string
-	endpoints        *EndpointCluster
 	endpointSecurity []*EndpointSecurity
-	vendorExtensions map[string]interface{}
 	hasPolicies      bool
+	methods          []string
+	//security map of security scheme names -> list of scopes
+	security         []map[string][]string
+	tier             string
+	disableSecurity  bool
+	vendorExtensions map[string]interface{}
+	policies         OperationPolicies
+	mockedAPIConfig  *api.MockedApiConfig
+	//todo(amali) refactor all vars to private/public vars
+	RateLimitPolicy *RateLimitPolicy
+	endpoints       *EndpointCluster
 }
 
 // GetEndpointSecurity returns the endpoint security object of a given resource.
@@ -79,7 +87,7 @@ func (resource *Resource) GetID() string {
 
 // GetMethod returns an array of http method  operations which are explicitly defined under
 // a given resource.
-func (resource *Resource) GetMethod() []*Operation {
+func (resource *Resource) GetMethods() []string {
 	return resource.methods
 }
 
@@ -89,37 +97,39 @@ func (resource *Resource) GetVendorExtensions() map[string]interface{} {
 	return resource.vendorExtensions
 }
 
-// GetMethodList returns a list of http Methods as strings which are explicitly defined under
-// a given resource.
-func (resource *Resource) GetMethodList() []string {
-	var methodList = make([]string, len(resource.methods))
-	for i, method := range resource.methods {
-		methodList[i] = method.method
-	}
-	return methodList
-}
-
-// GetOperations returns the array of operations of the resource.
-func (resource *Resource) GetOperations() []*Operation {
-	return resource.methods
-}
-
 // HasPolicies returns whether the resource has operations that includes policies.
 func (resource *Resource) HasPolicies() bool {
 	return resource.hasPolicies
 }
 
+// GetPolicies returns if the resouce is secured.
+func (resource *Resource) GetPolicies() OperationPolicies {
+	return resource.policies
+}
+
+// GetSecurity returns the security schemas defined for the http opeartion
+func (resource *Resource) GetSecurity() []map[string][]string {
+	return resource.security
+}
+
+// GetTier returns the operation level throttling tier
+func (resource *Resource) GetTier() string {
+	return resource.tier
+}
+
+// GetDisableSecurity returns if the resouce is secured.
+func (resource *Resource) GetDisableSecurity() bool {
+	return resource.disableSecurity
+}
+
 // CreateMinimalDummyResourceForTests create a resource object with minimal required set of values
 // which could be used for unit tests.
-func CreateMinimalDummyResourceForTests(path string, methods []*Operation, id string, urls []Endpoint, hasPolicies bool) Resource {
-
-	endpints := generateEndpointCluster(urls, constants.LoadBalance)
+func CreateMinimalDummyResourceForTests(path string, methods []string, id string, urls []Endpoint, hasPolicies bool) Resource {
 
 	return Resource{
 		path:          path,
 		methods:       methods,
 		iD:            id,
-		endpoints:     endpints,
 		pathMatchType: gwapiv1b1.PathMatchPathPrefix,
 		hasPolicies:   hasPolicies,
 	}

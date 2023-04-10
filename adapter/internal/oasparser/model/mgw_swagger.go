@@ -44,7 +44,6 @@ type MgwSwagger struct {
 	title                    string
 	version                  string
 	vendorExtensions         map[string]interface{}
-	xWso2Endpoints           map[string]*EndpointCluster
 	resources                []*Resource
 	xWso2Basepath            string
 	xWso2HTTP2BackendEnabled bool
@@ -219,11 +218,6 @@ func (swagger *MgwSwagger) GetXWso2HTTP2BackendEnabled() bool {
 // at openAPI's root level.
 func (swagger *MgwSwagger) GetVendorExtensions() map[string]interface{} {
 	return swagger.vendorExtensions
-}
-
-// GetXWso2Endpoints returns the array of x wso2 endpoints.
-func (swagger *MgwSwagger) GetXWso2Endpoints() map[string]*EndpointCluster {
-	return swagger.xWso2Endpoints
 }
 
 // GetResources returns the array of resources (openAPI path level info)

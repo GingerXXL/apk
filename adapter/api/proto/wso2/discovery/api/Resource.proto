@@ -34,21 +34,16 @@ option java_multiple_files = true;
 message Resource {
 	string id = 1;
 	string path = 2;
-	repeated Operation methods = 3;
-	EndpointCluster endpoints = 6;
-	repeated SecurityInfo endpointSecurity =7;
-	map<string, string> security = 8;
-	repeated string schemes = 10;
-}
-
-// Operation model which maps to a particular http methods
-message Operation {
-	string method = 1;
-	repeated SecurityList security = 2;
-	string tier = 3;
-	bool disableSecurity = 4;
-	OperationPolicies policies = 5;
-	// MockedApiConfig mockedApiConfig = 6;
+	repeated SecurityInfo endpointSecurity =3;
+	map<string, string> security = 4;
+	repeated string schemes = 5;
+	repeated string methods = 6;
+	//todo(amali) refactor following
+	repeated SecurityList scopesList = 7;
+	string tier = 8;
+	bool disableSecurity = 9;
+	OperationPolicies policies = 10;
+	EndpointCluster endpoints = 11;
 }
 
 // OperationPolicies holds policies of the APIM operations

@@ -137,7 +137,6 @@ func GetEnforcerAPI(mgwSwagger model.MgwSwagger, vhost string) *api.Api {
 	resources := []*api.Resource{}
 	securitySchemes := []*api.SecurityScheme{}
 	securityList := []*api.SecurityList{}
-	isMockedAPI := false
 	clientCertificates := []*api.Certificate{}
 
 	logger.LoggerOasparser.Debugf("Security schemes in GetEnforcerAPI method : %s. %v",
@@ -167,17 +166,35 @@ func GetEnforcerAPI(mgwSwagger model.MgwSwagger, vhost string) *api.Api {
 	}
 
 	for _, res := range mgwSwagger.GetResources() {
-		var operations = make([]*api.Operation, len(res.GetMethod()))
-		for i, op := range res.GetMethod() {
-			operations[i] = GetEnforcerAPIOperation(*op, isMockedAPI)
+
+		scopesList := make([]*api.SecurityList, len(res.GetSecurity()))
+		for i, security := range res.GetSecurity() {
+			mapOfSecurity := make(map[string]*api.Scopes)
+			for key, scopes := range security {
+				scopeList := &api.Scopes{
+					Scopes: scopes,
+				}
+				mapOfSecurity[key] = scopeList
+			}
+			secSchema := &api.SecurityList{
+				ScopeList: mapOfSecurity,
+			}
+			scopesList[i] = secSchema
+		}
+
+		policies := &api.OperationPolicies{
+			Request:  castPoliciesToEnforcerPolicies(res.GetPolicies().Request),
+			Response: castPoliciesToEnforcerPolicies(res.GetPolicies().Response),
+			Fault:    castPoliciesToEnforcerPolicies(res.GetPolicies().Fault),
 		}
 		resource := &api.Resource{
-			Id:      res.GetID(),
-			Methods: operations,
-			Path:    res.GetPath(),
-		}
-		if res.GetEndpoints() != nil {
-			resource.Endpoints = generateRPCEndpointCluster(res.GetEndpoints())
+			Id:              res.GetID(),
+			Path:            res.GetPath(),
+			ScopesList:      scopesList,
+			Tier:            res.GetTier(),
+			DisableSecurity: res.GetDisableSecurity(),
+			Policies:        policies,
+			Endpoints:       generateRPCEndpointCluster(res.GetEndpoints()),
 		}
 		if res.GetEndpointSecurity() != nil {
 			resource.EndpointSecurity = generateRPCEndpointSecurity(res.GetEndpointSecurity())
@@ -218,44 +235,6 @@ func GetEnforcerAPI(mgwSwagger model.MgwSwagger, vhost string) *api.Api {
 		// GraphqlComplexityInfo: mgwSwagger.GraphQLComplexities.Data.List,
 		SystemAPI: mgwSwagger.IsSystemAPI,
 	}
-}
-
-// GetEnforcerAPIOperation builds the operation object expected by the proto definition
-func GetEnforcerAPIOperation(operation model.Operation, isMockedAPI bool) *api.Operation {
-	secSchemas := make([]*api.SecurityList, len(operation.GetSecurity()))
-	for i, security := range operation.GetSecurity() {
-		mapOfSecurity := make(map[string]*api.Scopes)
-		for key, scopes := range security {
-			scopeList := &api.Scopes{
-				Scopes: scopes,
-			}
-			mapOfSecurity[key] = scopeList
-		}
-		secSchema := &api.SecurityList{
-			ScopeList: mapOfSecurity,
-		}
-		secSchemas[i] = secSchema
-	}
-
-	// var mockedAPIConfig *api.MockedApiConfig
-	// if isMockedAPI {
-	// 	mockedAPIConfig = operation.GetMockedAPIConfig()
-	// }
-
-	policies := &api.OperationPolicies{
-		Request:  castPoliciesToEnforcerPolicies(operation.GetPolicies().Request),
-		Response: castPoliciesToEnforcerPolicies(operation.GetPolicies().Response),
-		Fault:    castPoliciesToEnforcerPolicies(operation.GetPolicies().Fault),
-	}
-	apiOperation := api.Operation{
-		Method:          operation.GetMethod(),
-		Security:        secSchemas,
-		Tier:            operation.GetTier(),
-		DisableSecurity: operation.GetDisableSecurity(),
-		Policies:        policies,
-		// MockedApiConfig: mockedAPIConfig,
-	}
-	return &apiOperation
 }
 
 func castPoliciesToEnforcerPolicies(policies []model.Policy) []*api.Policy {

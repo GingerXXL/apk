@@ -22,9 +22,11 @@ private static final long serialVersionUID = 0L;
   private Resource() {
     id_ = "";
     path_ = "";
-    methods_ = java.util.Collections.emptyList();
     endpointSecurity_ = java.util.Collections.emptyList();
     schemes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    methods_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    scopesList_ = java.util.Collections.emptyList();
+    tier_ = "";
   }
 
   @java.lang.Override
@@ -72,14 +74,78 @@ private static final long serialVersionUID = 0L;
           }
           case 26: {
             if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              methods_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.Operation>();
+              endpointSecurity_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.SecurityInfo>();
               mutable_bitField0_ |= 0x00000001;
             }
-            methods_.add(
-                input.readMessage(org.wso2.choreo.connect.discovery.api.Operation.parser(), extensionRegistry));
+            endpointSecurity_.add(
+                input.readMessage(org.wso2.choreo.connect.discovery.api.SecurityInfo.parser(), extensionRegistry));
+            break;
+          }
+          case 34: {
+            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+              security_ = com.google.protobuf.MapField.newMapField(
+                  SecurityDefaultEntryHolder.defaultEntry);
+              mutable_bitField0_ |= 0x00000002;
+            }
+            com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+            security__ = input.readMessage(
+                SecurityDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+            security_.getMutableMap().put(
+                security__.getKey(), security__.getValue());
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
+              schemes_ = new com.google.protobuf.LazyStringArrayList();
+              mutable_bitField0_ |= 0x00000004;
+            }
+            schemes_.add(s);
             break;
           }
           case 50: {
+            java.lang.String s = input.readStringRequireUtf8();
+            if (!((mutable_bitField0_ & 0x00000008) != 0)) {
+              methods_ = new com.google.protobuf.LazyStringArrayList();
+              mutable_bitField0_ |= 0x00000008;
+            }
+            methods_.add(s);
+            break;
+          }
+          case 58: {
+            if (!((mutable_bitField0_ & 0x00000010) != 0)) {
+              scopesList_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.SecurityList>();
+              mutable_bitField0_ |= 0x00000010;
+            }
+            scopesList_.add(
+                input.readMessage(org.wso2.choreo.connect.discovery.api.SecurityList.parser(), extensionRegistry));
+            break;
+          }
+          case 66: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            tier_ = s;
+            break;
+          }
+          case 72: {
+
+            disableSecurity_ = input.readBool();
+            break;
+          }
+          case 82: {
+            org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder subBuilder = null;
+            if (policies_ != null) {
+              subBuilder = policies_.toBuilder();
+            }
+            policies_ = input.readMessage(org.wso2.choreo.connect.discovery.api.OperationPolicies.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(policies_);
+              policies_ = subBuilder.buildPartial();
+            }
+
+            break;
+          }
+          case 90: {
             org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder subBuilder = null;
             if (endpoints_ != null) {
               subBuilder = endpoints_.toBuilder();
@@ -90,37 +156,6 @@ private static final long serialVersionUID = 0L;
               endpoints_ = subBuilder.buildPartial();
             }
 
-            break;
-          }
-          case 58: {
-            if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-              endpointSecurity_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.SecurityInfo>();
-              mutable_bitField0_ |= 0x00000002;
-            }
-            endpointSecurity_.add(
-                input.readMessage(org.wso2.choreo.connect.discovery.api.SecurityInfo.parser(), extensionRegistry));
-            break;
-          }
-          case 66: {
-            if (!((mutable_bitField0_ & 0x00000004) != 0)) {
-              security_ = com.google.protobuf.MapField.newMapField(
-                  SecurityDefaultEntryHolder.defaultEntry);
-              mutable_bitField0_ |= 0x00000004;
-            }
-            com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
-            security__ = input.readMessage(
-                SecurityDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-            security_.getMutableMap().put(
-                security__.getKey(), security__.getValue());
-            break;
-          }
-          case 82: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000008) != 0)) {
-              schemes_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000008;
-            }
-            schemes_.add(s);
             break;
           }
           default: {
@@ -139,13 +174,16 @@ private static final long serialVersionUID = 0L;
           e).setUnfinishedMessage(this);
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        methods_ = java.util.Collections.unmodifiableList(methods_);
-      }
-      if (((mutable_bitField0_ & 0x00000002) != 0)) {
         endpointSecurity_ = java.util.Collections.unmodifiableList(endpointSecurity_);
       }
-      if (((mutable_bitField0_ & 0x00000008) != 0)) {
+      if (((mutable_bitField0_ & 0x00000004) != 0)) {
         schemes_ = schemes_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000008) != 0)) {
+        methods_ = methods_.getUnmodifiableView();
+      }
+      if (((mutable_bitField0_ & 0x00000010) != 0)) {
+        scopesList_ = java.util.Collections.unmodifiableList(scopesList_);
       }
       this.unknownFields = unknownFields.build();
       makeExtensionsImmutable();
@@ -161,7 +199,7 @@ private static final long serialVersionUID = 0L;
   protected com.google.protobuf.MapField internalGetMapField(
       int number) {
     switch (number) {
-      case 8:
+      case 4:
         return internalGetSecurity();
       default:
         throw new RuntimeException(
@@ -252,83 +290,17 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int METHODS_FIELD_NUMBER = 3;
-  private java.util.List<org.wso2.choreo.connect.discovery.api.Operation> methods_;
-  /**
-   * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-   */
-  @java.lang.Override
-  public java.util.List<org.wso2.choreo.connect.discovery.api.Operation> getMethodsList() {
-    return methods_;
-  }
-  /**
-   * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-   */
-  @java.lang.Override
-  public java.util.List<? extends org.wso2.choreo.connect.discovery.api.OperationOrBuilder> 
-      getMethodsOrBuilderList() {
-    return methods_;
-  }
-  /**
-   * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-   */
-  @java.lang.Override
-  public int getMethodsCount() {
-    return methods_.size();
-  }
-  /**
-   * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-   */
-  @java.lang.Override
-  public org.wso2.choreo.connect.discovery.api.Operation getMethods(int index) {
-    return methods_.get(index);
-  }
-  /**
-   * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-   */
-  @java.lang.Override
-  public org.wso2.choreo.connect.discovery.api.OperationOrBuilder getMethodsOrBuilder(
-      int index) {
-    return methods_.get(index);
-  }
-
-  public static final int ENDPOINTS_FIELD_NUMBER = 6;
-  private org.wso2.choreo.connect.discovery.api.EndpointCluster endpoints_;
-  /**
-   * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-   * @return Whether the endpoints field is set.
-   */
-  @java.lang.Override
-  public boolean hasEndpoints() {
-    return endpoints_ != null;
-  }
-  /**
-   * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-   * @return The endpoints.
-   */
-  @java.lang.Override
-  public org.wso2.choreo.connect.discovery.api.EndpointCluster getEndpoints() {
-    return endpoints_ == null ? org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
-  }
-  /**
-   * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-   */
-  @java.lang.Override
-  public org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder getEndpointsOrBuilder() {
-    return getEndpoints();
-  }
-
-  public static final int ENDPOINTSECURITY_FIELD_NUMBER = 7;
+  public static final int ENDPOINTSECURITY_FIELD_NUMBER = 3;
   private java.util.List<org.wso2.choreo.connect.discovery.api.SecurityInfo> endpointSecurity_;
   /**
-   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
    */
   @java.lang.Override
   public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityInfo> getEndpointSecurityList() {
     return endpointSecurity_;
   }
   /**
-   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
    */
   @java.lang.Override
   public java.util.List<? extends org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder> 
@@ -336,21 +308,21 @@ private static final long serialVersionUID = 0L;
     return endpointSecurity_;
   }
   /**
-   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
    */
   @java.lang.Override
   public int getEndpointSecurityCount() {
     return endpointSecurity_.size();
   }
   /**
-   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
    */
   @java.lang.Override
   public org.wso2.choreo.connect.discovery.api.SecurityInfo getEndpointSecurity(int index) {
     return endpointSecurity_.get(index);
   }
   /**
-   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+   * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
    */
   @java.lang.Override
   public org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder getEndpointSecurityOrBuilder(
@@ -358,7 +330,7 @@ private static final long serialVersionUID = 0L;
     return endpointSecurity_.get(index);
   }
 
-  public static final int SECURITY_FIELD_NUMBER = 8;
+  public static final int SECURITY_FIELD_NUMBER = 4;
   private static final class SecurityDefaultEntryHolder {
     static final com.google.protobuf.MapEntry<
         java.lang.String, java.lang.String> defaultEntry =
@@ -385,7 +357,7 @@ private static final long serialVersionUID = 0L;
     return internalGetSecurity().getMap().size();
   }
   /**
-   * <code>map&lt;string, string&gt; security = 8;</code>
+   * <code>map&lt;string, string&gt; security = 4;</code>
    */
 
   @java.lang.Override
@@ -403,7 +375,7 @@ private static final long serialVersionUID = 0L;
     return getSecurityMap();
   }
   /**
-   * <code>map&lt;string, string&gt; security = 8;</code>
+   * <code>map&lt;string, string&gt; security = 4;</code>
    */
   @java.lang.Override
 
@@ -411,7 +383,7 @@ private static final long serialVersionUID = 0L;
     return internalGetSecurity().getMap();
   }
   /**
-   * <code>map&lt;string, string&gt; security = 8;</code>
+   * <code>map&lt;string, string&gt; security = 4;</code>
    */
   @java.lang.Override
 
@@ -424,7 +396,7 @@ private static final long serialVersionUID = 0L;
     return map.containsKey(key) ? map.get(key) : defaultValue;
   }
   /**
-   * <code>map&lt;string, string&gt; security = 8;</code>
+   * <code>map&lt;string, string&gt; security = 4;</code>
    */
   @java.lang.Override
 
@@ -439,10 +411,10 @@ private static final long serialVersionUID = 0L;
     return map.get(key);
   }
 
-  public static final int SCHEMES_FIELD_NUMBER = 10;
+  public static final int SCHEMES_FIELD_NUMBER = 5;
   private com.google.protobuf.LazyStringList schemes_;
   /**
-   * <code>repeated string schemes = 10;</code>
+   * <code>repeated string schemes = 5;</code>
    * @return A list containing the schemes.
    */
   public com.google.protobuf.ProtocolStringList
@@ -450,14 +422,14 @@ private static final long serialVersionUID = 0L;
     return schemes_;
   }
   /**
-   * <code>repeated string schemes = 10;</code>
+   * <code>repeated string schemes = 5;</code>
    * @return The count of schemes.
    */
   public int getSchemesCount() {
     return schemes_.size();
   }
   /**
-   * <code>repeated string schemes = 10;</code>
+   * <code>repeated string schemes = 5;</code>
    * @param index The index of the element to return.
    * @return The schemes at the given index.
    */
@@ -465,13 +437,189 @@ private static final long serialVersionUID = 0L;
     return schemes_.get(index);
   }
   /**
-   * <code>repeated string schemes = 10;</code>
+   * <code>repeated string schemes = 5;</code>
    * @param index The index of the value to return.
    * @return The bytes of the schemes at the given index.
    */
   public com.google.protobuf.ByteString
       getSchemesBytes(int index) {
     return schemes_.getByteString(index);
+  }
+
+  public static final int METHODS_FIELD_NUMBER = 6;
+  private com.google.protobuf.LazyStringList methods_;
+  /**
+   * <code>repeated string methods = 6;</code>
+   * @return A list containing the methods.
+   */
+  public com.google.protobuf.ProtocolStringList
+      getMethodsList() {
+    return methods_;
+  }
+  /**
+   * <code>repeated string methods = 6;</code>
+   * @return The count of methods.
+   */
+  public int getMethodsCount() {
+    return methods_.size();
+  }
+  /**
+   * <code>repeated string methods = 6;</code>
+   * @param index The index of the element to return.
+   * @return The methods at the given index.
+   */
+  public java.lang.String getMethods(int index) {
+    return methods_.get(index);
+  }
+  /**
+   * <code>repeated string methods = 6;</code>
+   * @param index The index of the value to return.
+   * @return The bytes of the methods at the given index.
+   */
+  public com.google.protobuf.ByteString
+      getMethodsBytes(int index) {
+    return methods_.getByteString(index);
+  }
+
+  public static final int SCOPESLIST_FIELD_NUMBER = 7;
+  private java.util.List<org.wso2.choreo.connect.discovery.api.SecurityList> scopesList_;
+  /**
+   * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+   */
+  @java.lang.Override
+  public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityList> getScopesListList() {
+    return scopesList_;
+  }
+  /**
+   * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder> 
+      getScopesListOrBuilderList() {
+    return scopesList_;
+  }
+  /**
+   * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+   */
+  @java.lang.Override
+  public int getScopesListCount() {
+    return scopesList_.size();
+  }
+  /**
+   * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.SecurityList getScopesList(int index) {
+    return scopesList_.get(index);
+  }
+  /**
+   * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder getScopesListOrBuilder(
+      int index) {
+    return scopesList_.get(index);
+  }
+
+  public static final int TIER_FIELD_NUMBER = 8;
+  private volatile java.lang.Object tier_;
+  /**
+   * <code>string tier = 8;</code>
+   * @return The tier.
+   */
+  @java.lang.Override
+  public java.lang.String getTier() {
+    java.lang.Object ref = tier_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      tier_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string tier = 8;</code>
+   * @return The bytes for tier.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getTierBytes() {
+    java.lang.Object ref = tier_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      tier_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int DISABLESECURITY_FIELD_NUMBER = 9;
+  private boolean disableSecurity_;
+  /**
+   * <code>bool disableSecurity = 9;</code>
+   * @return The disableSecurity.
+   */
+  @java.lang.Override
+  public boolean getDisableSecurity() {
+    return disableSecurity_;
+  }
+
+  public static final int POLICIES_FIELD_NUMBER = 10;
+  private org.wso2.choreo.connect.discovery.api.OperationPolicies policies_;
+  /**
+   * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+   * @return Whether the policies field is set.
+   */
+  @java.lang.Override
+  public boolean hasPolicies() {
+    return policies_ != null;
+  }
+  /**
+   * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+   * @return The policies.
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.OperationPolicies getPolicies() {
+    return policies_ == null ? org.wso2.choreo.connect.discovery.api.OperationPolicies.getDefaultInstance() : policies_;
+  }
+  /**
+   * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.OperationPoliciesOrBuilder getPoliciesOrBuilder() {
+    return getPolicies();
+  }
+
+  public static final int ENDPOINTS_FIELD_NUMBER = 11;
+  private org.wso2.choreo.connect.discovery.api.EndpointCluster endpoints_;
+  /**
+   * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+   * @return Whether the endpoints field is set.
+   */
+  @java.lang.Override
+  public boolean hasEndpoints() {
+    return endpoints_ != null;
+  }
+  /**
+   * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+   * @return The endpoints.
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.EndpointCluster getEndpoints() {
+    return endpoints_ == null ? org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
+  }
+  /**
+   * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+   */
+  @java.lang.Override
+  public org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder getEndpointsOrBuilder() {
+    return getEndpoints();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -494,23 +642,35 @@ private static final long serialVersionUID = 0L;
     if (!getPathBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, path_);
     }
-    for (int i = 0; i < methods_.size(); i++) {
-      output.writeMessage(3, methods_.get(i));
-    }
-    if (endpoints_ != null) {
-      output.writeMessage(6, getEndpoints());
-    }
     for (int i = 0; i < endpointSecurity_.size(); i++) {
-      output.writeMessage(7, endpointSecurity_.get(i));
+      output.writeMessage(3, endpointSecurity_.get(i));
     }
     com.google.protobuf.GeneratedMessageV3
       .serializeStringMapTo(
         output,
         internalGetSecurity(),
         SecurityDefaultEntryHolder.defaultEntry,
-        8);
+        4);
     for (int i = 0; i < schemes_.size(); i++) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 10, schemes_.getRaw(i));
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, schemes_.getRaw(i));
+    }
+    for (int i = 0; i < methods_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 6, methods_.getRaw(i));
+    }
+    for (int i = 0; i < scopesList_.size(); i++) {
+      output.writeMessage(7, scopesList_.get(i));
+    }
+    if (!getTierBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 8, tier_);
+    }
+    if (disableSecurity_ != false) {
+      output.writeBool(9, disableSecurity_);
+    }
+    if (policies_ != null) {
+      output.writeMessage(10, getPolicies());
+    }
+    if (endpoints_ != null) {
+      output.writeMessage(11, getEndpoints());
     }
     unknownFields.writeTo(output);
   }
@@ -527,17 +687,9 @@ private static final long serialVersionUID = 0L;
     if (!getPathBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, path_);
     }
-    for (int i = 0; i < methods_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, methods_.get(i));
-    }
-    if (endpoints_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(6, getEndpoints());
-    }
     for (int i = 0; i < endpointSecurity_.size(); i++) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(7, endpointSecurity_.get(i));
+        .computeMessageSize(3, endpointSecurity_.get(i));
     }
     for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
          : internalGetSecurity().getMap().entrySet()) {
@@ -547,7 +699,7 @@ private static final long serialVersionUID = 0L;
           .setValue(entry.getValue())
           .build();
       size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(8, security__);
+          .computeMessageSize(4, security__);
     }
     {
       int dataSize = 0;
@@ -556,6 +708,33 @@ private static final long serialVersionUID = 0L;
       }
       size += dataSize;
       size += 1 * getSchemesList().size();
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < methods_.size(); i++) {
+        dataSize += computeStringSizeNoTag(methods_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getMethodsList().size();
+    }
+    for (int i = 0; i < scopesList_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, scopesList_.get(i));
+    }
+    if (!getTierBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(8, tier_);
+    }
+    if (disableSecurity_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(9, disableSecurity_);
+    }
+    if (policies_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(10, getPolicies());
+    }
+    if (endpoints_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(11, getEndpoints());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -576,19 +755,30 @@ private static final long serialVersionUID = 0L;
         .equals(other.getId())) return false;
     if (!getPath()
         .equals(other.getPath())) return false;
-    if (!getMethodsList()
-        .equals(other.getMethodsList())) return false;
-    if (hasEndpoints() != other.hasEndpoints()) return false;
-    if (hasEndpoints()) {
-      if (!getEndpoints()
-          .equals(other.getEndpoints())) return false;
-    }
     if (!getEndpointSecurityList()
         .equals(other.getEndpointSecurityList())) return false;
     if (!internalGetSecurity().equals(
         other.internalGetSecurity())) return false;
     if (!getSchemesList()
         .equals(other.getSchemesList())) return false;
+    if (!getMethodsList()
+        .equals(other.getMethodsList())) return false;
+    if (!getScopesListList()
+        .equals(other.getScopesListList())) return false;
+    if (!getTier()
+        .equals(other.getTier())) return false;
+    if (getDisableSecurity()
+        != other.getDisableSecurity()) return false;
+    if (hasPolicies() != other.hasPolicies()) return false;
+    if (hasPolicies()) {
+      if (!getPolicies()
+          .equals(other.getPolicies())) return false;
+    }
+    if (hasEndpoints() != other.hasEndpoints()) return false;
+    if (hasEndpoints()) {
+      if (!getEndpoints()
+          .equals(other.getEndpoints())) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -604,14 +794,6 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getId().hashCode();
     hash = (37 * hash) + PATH_FIELD_NUMBER;
     hash = (53 * hash) + getPath().hashCode();
-    if (getMethodsCount() > 0) {
-      hash = (37 * hash) + METHODS_FIELD_NUMBER;
-      hash = (53 * hash) + getMethodsList().hashCode();
-    }
-    if (hasEndpoints()) {
-      hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
-      hash = (53 * hash) + getEndpoints().hashCode();
-    }
     if (getEndpointSecurityCount() > 0) {
       hash = (37 * hash) + ENDPOINTSECURITY_FIELD_NUMBER;
       hash = (53 * hash) + getEndpointSecurityList().hashCode();
@@ -623,6 +805,27 @@ private static final long serialVersionUID = 0L;
     if (getSchemesCount() > 0) {
       hash = (37 * hash) + SCHEMES_FIELD_NUMBER;
       hash = (53 * hash) + getSchemesList().hashCode();
+    }
+    if (getMethodsCount() > 0) {
+      hash = (37 * hash) + METHODS_FIELD_NUMBER;
+      hash = (53 * hash) + getMethodsList().hashCode();
+    }
+    if (getScopesListCount() > 0) {
+      hash = (37 * hash) + SCOPESLIST_FIELD_NUMBER;
+      hash = (53 * hash) + getScopesListList().hashCode();
+    }
+    hash = (37 * hash) + TIER_FIELD_NUMBER;
+    hash = (53 * hash) + getTier().hashCode();
+    hash = (37 * hash) + DISABLESECURITY_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getDisableSecurity());
+    if (hasPolicies()) {
+      hash = (37 * hash) + POLICIES_FIELD_NUMBER;
+      hash = (53 * hash) + getPolicies().hashCode();
+    }
+    if (hasEndpoints()) {
+      hash = (37 * hash) + ENDPOINTS_FIELD_NUMBER;
+      hash = (53 * hash) + getEndpoints().hashCode();
     }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
@@ -739,7 +942,7 @@ private static final long serialVersionUID = 0L;
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 8:
+        case 4:
           return internalGetSecurity();
         default:
           throw new RuntimeException(
@@ -750,7 +953,7 @@ private static final long serialVersionUID = 0L;
     protected com.google.protobuf.MapField internalGetMutableMapField(
         int number) {
       switch (number) {
-        case 8:
+        case 4:
           return internalGetMutableSecurity();
         default:
           throw new RuntimeException(
@@ -778,8 +981,8 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
-        getMethodsFieldBuilder();
         getEndpointSecurityFieldBuilder();
+        getScopesListFieldBuilder();
       }
     }
     @java.lang.Override
@@ -789,11 +992,32 @@ private static final long serialVersionUID = 0L;
 
       path_ = "";
 
-      if (methodsBuilder_ == null) {
-        methods_ = java.util.Collections.emptyList();
+      if (endpointSecurityBuilder_ == null) {
+        endpointSecurity_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000001);
       } else {
-        methodsBuilder_.clear();
+        endpointSecurityBuilder_.clear();
+      }
+      internalGetMutableSecurity().clear();
+      schemes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      methods_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      if (scopesListBuilder_ == null) {
+        scopesList_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
+      } else {
+        scopesListBuilder_.clear();
+      }
+      tier_ = "";
+
+      disableSecurity_ = false;
+
+      if (policiesBuilder_ == null) {
+        policies_ = null;
+      } else {
+        policies_ = null;
+        policiesBuilder_ = null;
       }
       if (endpointsBuilder_ == null) {
         endpoints_ = null;
@@ -801,15 +1025,6 @@ private static final long serialVersionUID = 0L;
         endpoints_ = null;
         endpointsBuilder_ = null;
       }
-      if (endpointSecurityBuilder_ == null) {
-        endpointSecurity_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      } else {
-        endpointSecurityBuilder_.clear();
-      }
-      internalGetMutableSecurity().clear();
-      schemes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
       return this;
     }
 
@@ -839,24 +1054,10 @@ private static final long serialVersionUID = 0L;
       int from_bitField0_ = bitField0_;
       result.id_ = id_;
       result.path_ = path_;
-      if (methodsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
-          methods_ = java.util.Collections.unmodifiableList(methods_);
-          bitField0_ = (bitField0_ & ~0x00000001);
-        }
-        result.methods_ = methods_;
-      } else {
-        result.methods_ = methodsBuilder_.build();
-      }
-      if (endpointsBuilder_ == null) {
-        result.endpoints_ = endpoints_;
-      } else {
-        result.endpoints_ = endpointsBuilder_.build();
-      }
       if (endpointSecurityBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000001) != 0)) {
           endpointSecurity_ = java.util.Collections.unmodifiableList(endpointSecurity_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.endpointSecurity_ = endpointSecurity_;
       } else {
@@ -864,11 +1065,37 @@ private static final long serialVersionUID = 0L;
       }
       result.security_ = internalGetSecurity();
       result.security_.makeImmutable();
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         schemes_ = schemes_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
       }
       result.schemes_ = schemes_;
+      if (((bitField0_ & 0x00000008) != 0)) {
+        methods_ = methods_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000008);
+      }
+      result.methods_ = methods_;
+      if (scopesListBuilder_ == null) {
+        if (((bitField0_ & 0x00000010) != 0)) {
+          scopesList_ = java.util.Collections.unmodifiableList(scopesList_);
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.scopesList_ = scopesList_;
+      } else {
+        result.scopesList_ = scopesListBuilder_.build();
+      }
+      result.tier_ = tier_;
+      result.disableSecurity_ = disableSecurity_;
+      if (policiesBuilder_ == null) {
+        result.policies_ = policies_;
+      } else {
+        result.policies_ = policiesBuilder_.build();
+      }
+      if (endpointsBuilder_ == null) {
+        result.endpoints_ = endpoints_;
+      } else {
+        result.endpoints_ = endpointsBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -925,40 +1152,11 @@ private static final long serialVersionUID = 0L;
         path_ = other.path_;
         onChanged();
       }
-      if (methodsBuilder_ == null) {
-        if (!other.methods_.isEmpty()) {
-          if (methods_.isEmpty()) {
-            methods_ = other.methods_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-          } else {
-            ensureMethodsIsMutable();
-            methods_.addAll(other.methods_);
-          }
-          onChanged();
-        }
-      } else {
-        if (!other.methods_.isEmpty()) {
-          if (methodsBuilder_.isEmpty()) {
-            methodsBuilder_.dispose();
-            methodsBuilder_ = null;
-            methods_ = other.methods_;
-            bitField0_ = (bitField0_ & ~0x00000001);
-            methodsBuilder_ = 
-              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                 getMethodsFieldBuilder() : null;
-          } else {
-            methodsBuilder_.addAllMessages(other.methods_);
-          }
-        }
-      }
-      if (other.hasEndpoints()) {
-        mergeEndpoints(other.getEndpoints());
-      }
       if (endpointSecurityBuilder_ == null) {
         if (!other.endpointSecurity_.isEmpty()) {
           if (endpointSecurity_.isEmpty()) {
             endpointSecurity_ = other.endpointSecurity_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
           } else {
             ensureEndpointSecurityIsMutable();
             endpointSecurity_.addAll(other.endpointSecurity_);
@@ -971,7 +1169,7 @@ private static final long serialVersionUID = 0L;
             endpointSecurityBuilder_.dispose();
             endpointSecurityBuilder_ = null;
             endpointSecurity_ = other.endpointSecurity_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000001);
             endpointSecurityBuilder_ = 
               com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                  getEndpointSecurityFieldBuilder() : null;
@@ -985,12 +1183,61 @@ private static final long serialVersionUID = 0L;
       if (!other.schemes_.isEmpty()) {
         if (schemes_.isEmpty()) {
           schemes_ = other.schemes_;
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           ensureSchemesIsMutable();
           schemes_.addAll(other.schemes_);
         }
         onChanged();
+      }
+      if (!other.methods_.isEmpty()) {
+        if (methods_.isEmpty()) {
+          methods_ = other.methods_;
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          ensureMethodsIsMutable();
+          methods_.addAll(other.methods_);
+        }
+        onChanged();
+      }
+      if (scopesListBuilder_ == null) {
+        if (!other.scopesList_.isEmpty()) {
+          if (scopesList_.isEmpty()) {
+            scopesList_ = other.scopesList_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureScopesListIsMutable();
+            scopesList_.addAll(other.scopesList_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.scopesList_.isEmpty()) {
+          if (scopesListBuilder_.isEmpty()) {
+            scopesListBuilder_.dispose();
+            scopesListBuilder_ = null;
+            scopesList_ = other.scopesList_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+            scopesListBuilder_ = 
+              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                 getScopesListFieldBuilder() : null;
+          } else {
+            scopesListBuilder_.addAllMessages(other.scopesList_);
+          }
+        }
+      }
+      if (!other.getTier().isEmpty()) {
+        tier_ = other.tier_;
+        onChanged();
+      }
+      if (other.getDisableSecurity() != false) {
+        setDisableSecurity(other.getDisableSecurity());
+      }
+      if (other.hasPolicies()) {
+        mergePolicies(other.getPolicies());
+      }
+      if (other.hasEndpoints()) {
+        mergeEndpoints(other.getEndpoints());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -1174,371 +1421,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.util.List<org.wso2.choreo.connect.discovery.api.Operation> methods_ =
-      java.util.Collections.emptyList();
-    private void ensureMethodsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
-        methods_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.Operation>(methods_);
-        bitField0_ |= 0x00000001;
-       }
-    }
-
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-        org.wso2.choreo.connect.discovery.api.Operation, org.wso2.choreo.connect.discovery.api.Operation.Builder, org.wso2.choreo.connect.discovery.api.OperationOrBuilder> methodsBuilder_;
-
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public java.util.List<org.wso2.choreo.connect.discovery.api.Operation> getMethodsList() {
-      if (methodsBuilder_ == null) {
-        return java.util.Collections.unmodifiableList(methods_);
-      } else {
-        return methodsBuilder_.getMessageList();
-      }
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public int getMethodsCount() {
-      if (methodsBuilder_ == null) {
-        return methods_.size();
-      } else {
-        return methodsBuilder_.getCount();
-      }
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.Operation getMethods(int index) {
-      if (methodsBuilder_ == null) {
-        return methods_.get(index);
-      } else {
-        return methodsBuilder_.getMessage(index);
-      }
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder setMethods(
-        int index, org.wso2.choreo.connect.discovery.api.Operation value) {
-      if (methodsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodsIsMutable();
-        methods_.set(index, value);
-        onChanged();
-      } else {
-        methodsBuilder_.setMessage(index, value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder setMethods(
-        int index, org.wso2.choreo.connect.discovery.api.Operation.Builder builderForValue) {
-      if (methodsBuilder_ == null) {
-        ensureMethodsIsMutable();
-        methods_.set(index, builderForValue.build());
-        onChanged();
-      } else {
-        methodsBuilder_.setMessage(index, builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder addMethods(org.wso2.choreo.connect.discovery.api.Operation value) {
-      if (methodsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodsIsMutable();
-        methods_.add(value);
-        onChanged();
-      } else {
-        methodsBuilder_.addMessage(value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder addMethods(
-        int index, org.wso2.choreo.connect.discovery.api.Operation value) {
-      if (methodsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        ensureMethodsIsMutable();
-        methods_.add(index, value);
-        onChanged();
-      } else {
-        methodsBuilder_.addMessage(index, value);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder addMethods(
-        org.wso2.choreo.connect.discovery.api.Operation.Builder builderForValue) {
-      if (methodsBuilder_ == null) {
-        ensureMethodsIsMutable();
-        methods_.add(builderForValue.build());
-        onChanged();
-      } else {
-        methodsBuilder_.addMessage(builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder addMethods(
-        int index, org.wso2.choreo.connect.discovery.api.Operation.Builder builderForValue) {
-      if (methodsBuilder_ == null) {
-        ensureMethodsIsMutable();
-        methods_.add(index, builderForValue.build());
-        onChanged();
-      } else {
-        methodsBuilder_.addMessage(index, builderForValue.build());
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder addAllMethods(
-        java.lang.Iterable<? extends org.wso2.choreo.connect.discovery.api.Operation> values) {
-      if (methodsBuilder_ == null) {
-        ensureMethodsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, methods_);
-        onChanged();
-      } else {
-        methodsBuilder_.addAllMessages(values);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder clearMethods() {
-      if (methodsBuilder_ == null) {
-        methods_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-      } else {
-        methodsBuilder_.clear();
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public Builder removeMethods(int index) {
-      if (methodsBuilder_ == null) {
-        ensureMethodsIsMutable();
-        methods_.remove(index);
-        onChanged();
-      } else {
-        methodsBuilder_.remove(index);
-      }
-      return this;
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.Operation.Builder getMethodsBuilder(
-        int index) {
-      return getMethodsFieldBuilder().getBuilder(index);
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.OperationOrBuilder getMethodsOrBuilder(
-        int index) {
-      if (methodsBuilder_ == null) {
-        return methods_.get(index);  } else {
-        return methodsBuilder_.getMessageOrBuilder(index);
-      }
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public java.util.List<? extends org.wso2.choreo.connect.discovery.api.OperationOrBuilder> 
-         getMethodsOrBuilderList() {
-      if (methodsBuilder_ != null) {
-        return methodsBuilder_.getMessageOrBuilderList();
-      } else {
-        return java.util.Collections.unmodifiableList(methods_);
-      }
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.Operation.Builder addMethodsBuilder() {
-      return getMethodsFieldBuilder().addBuilder(
-          org.wso2.choreo.connect.discovery.api.Operation.getDefaultInstance());
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.Operation.Builder addMethodsBuilder(
-        int index) {
-      return getMethodsFieldBuilder().addBuilder(
-          index, org.wso2.choreo.connect.discovery.api.Operation.getDefaultInstance());
-    }
-    /**
-     * <code>repeated .wso2.discovery.api.Operation methods = 3;</code>
-     */
-    public java.util.List<org.wso2.choreo.connect.discovery.api.Operation.Builder> 
-         getMethodsBuilderList() {
-      return getMethodsFieldBuilder().getBuilderList();
-    }
-    private com.google.protobuf.RepeatedFieldBuilderV3<
-        org.wso2.choreo.connect.discovery.api.Operation, org.wso2.choreo.connect.discovery.api.Operation.Builder, org.wso2.choreo.connect.discovery.api.OperationOrBuilder> 
-        getMethodsFieldBuilder() {
-      if (methodsBuilder_ == null) {
-        methodsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-            org.wso2.choreo.connect.discovery.api.Operation, org.wso2.choreo.connect.discovery.api.Operation.Builder, org.wso2.choreo.connect.discovery.api.OperationOrBuilder>(
-                methods_,
-                ((bitField0_ & 0x00000001) != 0),
-                getParentForChildren(),
-                isClean());
-        methods_ = null;
-      }
-      return methodsBuilder_;
-    }
-
-    private org.wso2.choreo.connect.discovery.api.EndpointCluster endpoints_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder> endpointsBuilder_;
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     * @return Whether the endpoints field is set.
-     */
-    public boolean hasEndpoints() {
-      return endpointsBuilder_ != null || endpoints_ != null;
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     * @return The endpoints.
-     */
-    public org.wso2.choreo.connect.discovery.api.EndpointCluster getEndpoints() {
-      if (endpointsBuilder_ == null) {
-        return endpoints_ == null ? org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
-      } else {
-        return endpointsBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public Builder setEndpoints(org.wso2.choreo.connect.discovery.api.EndpointCluster value) {
-      if (endpointsBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        endpoints_ = value;
-        onChanged();
-      } else {
-        endpointsBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public Builder setEndpoints(
-        org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder builderForValue) {
-      if (endpointsBuilder_ == null) {
-        endpoints_ = builderForValue.build();
-        onChanged();
-      } else {
-        endpointsBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public Builder mergeEndpoints(org.wso2.choreo.connect.discovery.api.EndpointCluster value) {
-      if (endpointsBuilder_ == null) {
-        if (endpoints_ != null) {
-          endpoints_ =
-            org.wso2.choreo.connect.discovery.api.EndpointCluster.newBuilder(endpoints_).mergeFrom(value).buildPartial();
-        } else {
-          endpoints_ = value;
-        }
-        onChanged();
-      } else {
-        endpointsBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public Builder clearEndpoints() {
-      if (endpointsBuilder_ == null) {
-        endpoints_ = null;
-        onChanged();
-      } else {
-        endpoints_ = null;
-        endpointsBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder getEndpointsBuilder() {
-      
-      onChanged();
-      return getEndpointsFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    public org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder getEndpointsOrBuilder() {
-      if (endpointsBuilder_ != null) {
-        return endpointsBuilder_.getMessageOrBuilder();
-      } else {
-        return endpoints_ == null ?
-            org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
-      }
-    }
-    /**
-     * <code>.wso2.discovery.api.EndpointCluster endpoints = 6;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder> 
-        getEndpointsFieldBuilder() {
-      if (endpointsBuilder_ == null) {
-        endpointsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder>(
-                getEndpoints(),
-                getParentForChildren(),
-                isClean());
-        endpoints_ = null;
-      }
-      return endpointsBuilder_;
-    }
-
     private java.util.List<org.wso2.choreo.connect.discovery.api.SecurityInfo> endpointSecurity_ =
       java.util.Collections.emptyList();
     private void ensureEndpointSecurityIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         endpointSecurity_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.SecurityInfo>(endpointSecurity_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
        }
     }
 
@@ -1546,7 +1434,7 @@ private static final long serialVersionUID = 0L;
         org.wso2.choreo.connect.discovery.api.SecurityInfo, org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder, org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder> endpointSecurityBuilder_;
 
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityInfo> getEndpointSecurityList() {
       if (endpointSecurityBuilder_ == null) {
@@ -1556,7 +1444,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public int getEndpointSecurityCount() {
       if (endpointSecurityBuilder_ == null) {
@@ -1566,7 +1454,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public org.wso2.choreo.connect.discovery.api.SecurityInfo getEndpointSecurity(int index) {
       if (endpointSecurityBuilder_ == null) {
@@ -1576,7 +1464,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder setEndpointSecurity(
         int index, org.wso2.choreo.connect.discovery.api.SecurityInfo value) {
@@ -1593,7 +1481,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder setEndpointSecurity(
         int index, org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder builderForValue) {
@@ -1607,7 +1495,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder addEndpointSecurity(org.wso2.choreo.connect.discovery.api.SecurityInfo value) {
       if (endpointSecurityBuilder_ == null) {
@@ -1623,7 +1511,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder addEndpointSecurity(
         int index, org.wso2.choreo.connect.discovery.api.SecurityInfo value) {
@@ -1640,7 +1528,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder addEndpointSecurity(
         org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder builderForValue) {
@@ -1654,7 +1542,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder addEndpointSecurity(
         int index, org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder builderForValue) {
@@ -1668,7 +1556,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder addAllEndpointSecurity(
         java.lang.Iterable<? extends org.wso2.choreo.connect.discovery.api.SecurityInfo> values) {
@@ -1683,12 +1571,12 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder clearEndpointSecurity() {
       if (endpointSecurityBuilder_ == null) {
         endpointSecurity_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
       } else {
         endpointSecurityBuilder_.clear();
@@ -1696,7 +1584,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public Builder removeEndpointSecurity(int index) {
       if (endpointSecurityBuilder_ == null) {
@@ -1709,14 +1597,14 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder getEndpointSecurityBuilder(
         int index) {
       return getEndpointSecurityFieldBuilder().getBuilder(index);
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder getEndpointSecurityOrBuilder(
         int index) {
@@ -1726,7 +1614,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public java.util.List<? extends org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder> 
          getEndpointSecurityOrBuilderList() {
@@ -1737,14 +1625,14 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder addEndpointSecurityBuilder() {
       return getEndpointSecurityFieldBuilder().addBuilder(
           org.wso2.choreo.connect.discovery.api.SecurityInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder addEndpointSecurityBuilder(
         int index) {
@@ -1752,7 +1640,7 @@ private static final long serialVersionUID = 0L;
           index, org.wso2.choreo.connect.discovery.api.SecurityInfo.getDefaultInstance());
     }
     /**
-     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 7;</code>
+     * <code>repeated .wso2.discovery.api.SecurityInfo endpointSecurity = 3;</code>
      */
     public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder> 
          getEndpointSecurityBuilderList() {
@@ -1765,7 +1653,7 @@ private static final long serialVersionUID = 0L;
         endpointSecurityBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
             org.wso2.choreo.connect.discovery.api.SecurityInfo, org.wso2.choreo.connect.discovery.api.SecurityInfo.Builder, org.wso2.choreo.connect.discovery.api.SecurityInfoOrBuilder>(
                 endpointSecurity_,
-                ((bitField0_ & 0x00000002) != 0),
+                ((bitField0_ & 0x00000001) != 0),
                 getParentForChildren(),
                 isClean());
         endpointSecurity_ = null;
@@ -1800,7 +1688,7 @@ private static final long serialVersionUID = 0L;
       return internalGetSecurity().getMap().size();
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
 
     @java.lang.Override
@@ -1818,7 +1706,7 @@ private static final long serialVersionUID = 0L;
       return getSecurityMap();
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
     @java.lang.Override
 
@@ -1826,7 +1714,7 @@ private static final long serialVersionUID = 0L;
       return internalGetSecurity().getMap();
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
     @java.lang.Override
 
@@ -1839,7 +1727,7 @@ private static final long serialVersionUID = 0L;
       return map.containsKey(key) ? map.get(key) : defaultValue;
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
     @java.lang.Override
 
@@ -1860,7 +1748,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
 
     public Builder removeSecurity(
@@ -1879,7 +1767,7 @@ private static final long serialVersionUID = 0L;
       return internalGetMutableSecurity().getMutableMap();
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
     public Builder putSecurity(
         java.lang.String key,
@@ -1891,7 +1779,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>map&lt;string, string&gt; security = 8;</code>
+     * <code>map&lt;string, string&gt; security = 4;</code>
      */
 
     public Builder putAllSecurity(
@@ -1903,13 +1791,13 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.LazyStringList schemes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     private void ensureSchemesIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         schemes_ = new com.google.protobuf.LazyStringArrayList(schemes_);
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
        }
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @return A list containing the schemes.
      */
     public com.google.protobuf.ProtocolStringList
@@ -1917,14 +1805,14 @@ private static final long serialVersionUID = 0L;
       return schemes_.getUnmodifiableView();
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @return The count of schemes.
      */
     public int getSchemesCount() {
       return schemes_.size();
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param index The index of the element to return.
      * @return The schemes at the given index.
      */
@@ -1932,7 +1820,7 @@ private static final long serialVersionUID = 0L;
       return schemes_.get(index);
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param index The index of the value to return.
      * @return The bytes of the schemes at the given index.
      */
@@ -1941,7 +1829,7 @@ private static final long serialVersionUID = 0L;
       return schemes_.getByteString(index);
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param index The index to set the value at.
      * @param value The schemes to set.
      * @return This builder for chaining.
@@ -1957,7 +1845,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param value The schemes to add.
      * @return This builder for chaining.
      */
@@ -1972,7 +1860,7 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param values The schemes to add.
      * @return This builder for chaining.
      */
@@ -1985,17 +1873,17 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @return This builder for chaining.
      */
     public Builder clearSchemes() {
       schemes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
     /**
-     * <code>repeated string schemes = 10;</code>
+     * <code>repeated string schemes = 5;</code>
      * @param value The bytes of the schemes to add.
      * @return This builder for chaining.
      */
@@ -2009,6 +1897,701 @@ private static final long serialVersionUID = 0L;
       schemes_.add(value);
       onChanged();
       return this;
+    }
+
+    private com.google.protobuf.LazyStringList methods_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private void ensureMethodsIsMutable() {
+      if (!((bitField0_ & 0x00000008) != 0)) {
+        methods_ = new com.google.protobuf.LazyStringArrayList(methods_);
+        bitField0_ |= 0x00000008;
+       }
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @return A list containing the methods.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getMethodsList() {
+      return methods_.getUnmodifiableView();
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @return The count of methods.
+     */
+    public int getMethodsCount() {
+      return methods_.size();
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param index The index of the element to return.
+     * @return The methods at the given index.
+     */
+    public java.lang.String getMethods(int index) {
+      return methods_.get(index);
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the methods at the given index.
+     */
+    public com.google.protobuf.ByteString
+        getMethodsBytes(int index) {
+      return methods_.getByteString(index);
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param index The index to set the value at.
+     * @param value The methods to set.
+     * @return This builder for chaining.
+     */
+    public Builder setMethods(
+        int index, java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureMethodsIsMutable();
+      methods_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param value The methods to add.
+     * @return This builder for chaining.
+     */
+    public Builder addMethods(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureMethodsIsMutable();
+      methods_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param values The methods to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllMethods(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureMethodsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, methods_);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearMethods() {
+      methods_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string methods = 6;</code>
+     * @param value The bytes of the methods to add.
+     * @return This builder for chaining.
+     */
+    public Builder addMethodsBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      ensureMethodsIsMutable();
+      methods_.add(value);
+      onChanged();
+      return this;
+    }
+
+    private java.util.List<org.wso2.choreo.connect.discovery.api.SecurityList> scopesList_ =
+      java.util.Collections.emptyList();
+    private void ensureScopesListIsMutable() {
+      if (!((bitField0_ & 0x00000010) != 0)) {
+        scopesList_ = new java.util.ArrayList<org.wso2.choreo.connect.discovery.api.SecurityList>(scopesList_);
+        bitField0_ |= 0x00000010;
+       }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.SecurityList, org.wso2.choreo.connect.discovery.api.SecurityList.Builder, org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder> scopesListBuilder_;
+
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityList> getScopesListList() {
+      if (scopesListBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(scopesList_);
+      } else {
+        return scopesListBuilder_.getMessageList();
+      }
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public int getScopesListCount() {
+      if (scopesListBuilder_ == null) {
+        return scopesList_.size();
+      } else {
+        return scopesListBuilder_.getCount();
+      }
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.SecurityList getScopesList(int index) {
+      if (scopesListBuilder_ == null) {
+        return scopesList_.get(index);
+      } else {
+        return scopesListBuilder_.getMessage(index);
+      }
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder setScopesList(
+        int index, org.wso2.choreo.connect.discovery.api.SecurityList value) {
+      if (scopesListBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureScopesListIsMutable();
+        scopesList_.set(index, value);
+        onChanged();
+      } else {
+        scopesListBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder setScopesList(
+        int index, org.wso2.choreo.connect.discovery.api.SecurityList.Builder builderForValue) {
+      if (scopesListBuilder_ == null) {
+        ensureScopesListIsMutable();
+        scopesList_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        scopesListBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder addScopesList(org.wso2.choreo.connect.discovery.api.SecurityList value) {
+      if (scopesListBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureScopesListIsMutable();
+        scopesList_.add(value);
+        onChanged();
+      } else {
+        scopesListBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder addScopesList(
+        int index, org.wso2.choreo.connect.discovery.api.SecurityList value) {
+      if (scopesListBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureScopesListIsMutable();
+        scopesList_.add(index, value);
+        onChanged();
+      } else {
+        scopesListBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder addScopesList(
+        org.wso2.choreo.connect.discovery.api.SecurityList.Builder builderForValue) {
+      if (scopesListBuilder_ == null) {
+        ensureScopesListIsMutable();
+        scopesList_.add(builderForValue.build());
+        onChanged();
+      } else {
+        scopesListBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder addScopesList(
+        int index, org.wso2.choreo.connect.discovery.api.SecurityList.Builder builderForValue) {
+      if (scopesListBuilder_ == null) {
+        ensureScopesListIsMutable();
+        scopesList_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        scopesListBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder addAllScopesList(
+        java.lang.Iterable<? extends org.wso2.choreo.connect.discovery.api.SecurityList> values) {
+      if (scopesListBuilder_ == null) {
+        ensureScopesListIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, scopesList_);
+        onChanged();
+      } else {
+        scopesListBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder clearScopesList() {
+      if (scopesListBuilder_ == null) {
+        scopesList_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+      } else {
+        scopesListBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public Builder removeScopesList(int index) {
+      if (scopesListBuilder_ == null) {
+        ensureScopesListIsMutable();
+        scopesList_.remove(index);
+        onChanged();
+      } else {
+        scopesListBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.SecurityList.Builder getScopesListBuilder(
+        int index) {
+      return getScopesListFieldBuilder().getBuilder(index);
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder getScopesListOrBuilder(
+        int index) {
+      if (scopesListBuilder_ == null) {
+        return scopesList_.get(index);  } else {
+        return scopesListBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public java.util.List<? extends org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder> 
+         getScopesListOrBuilderList() {
+      if (scopesListBuilder_ != null) {
+        return scopesListBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(scopesList_);
+      }
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.SecurityList.Builder addScopesListBuilder() {
+      return getScopesListFieldBuilder().addBuilder(
+          org.wso2.choreo.connect.discovery.api.SecurityList.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.SecurityList.Builder addScopesListBuilder(
+        int index) {
+      return getScopesListFieldBuilder().addBuilder(
+          index, org.wso2.choreo.connect.discovery.api.SecurityList.getDefaultInstance());
+    }
+    /**
+     * <code>repeated .wso2.discovery.api.SecurityList scopesList = 7;</code>
+     */
+    public java.util.List<org.wso2.choreo.connect.discovery.api.SecurityList.Builder> 
+         getScopesListBuilderList() {
+      return getScopesListFieldBuilder().getBuilderList();
+    }
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.SecurityList, org.wso2.choreo.connect.discovery.api.SecurityList.Builder, org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder> 
+        getScopesListFieldBuilder() {
+      if (scopesListBuilder_ == null) {
+        scopesListBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+            org.wso2.choreo.connect.discovery.api.SecurityList, org.wso2.choreo.connect.discovery.api.SecurityList.Builder, org.wso2.choreo.connect.discovery.api.SecurityListOrBuilder>(
+                scopesList_,
+                ((bitField0_ & 0x00000010) != 0),
+                getParentForChildren(),
+                isClean());
+        scopesList_ = null;
+      }
+      return scopesListBuilder_;
+    }
+
+    private java.lang.Object tier_ = "";
+    /**
+     * <code>string tier = 8;</code>
+     * @return The tier.
+     */
+    public java.lang.String getTier() {
+      java.lang.Object ref = tier_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        tier_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string tier = 8;</code>
+     * @return The bytes for tier.
+     */
+    public com.google.protobuf.ByteString
+        getTierBytes() {
+      java.lang.Object ref = tier_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        tier_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string tier = 8;</code>
+     * @param value The tier to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTier(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      tier_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string tier = 8;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearTier() {
+      
+      tier_ = getDefaultInstance().getTier();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string tier = 8;</code>
+     * @param value The bytes for tier to set.
+     * @return This builder for chaining.
+     */
+    public Builder setTierBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      tier_ = value;
+      onChanged();
+      return this;
+    }
+
+    private boolean disableSecurity_ ;
+    /**
+     * <code>bool disableSecurity = 9;</code>
+     * @return The disableSecurity.
+     */
+    @java.lang.Override
+    public boolean getDisableSecurity() {
+      return disableSecurity_;
+    }
+    /**
+     * <code>bool disableSecurity = 9;</code>
+     * @param value The disableSecurity to set.
+     * @return This builder for chaining.
+     */
+    public Builder setDisableSecurity(boolean value) {
+      
+      disableSecurity_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bool disableSecurity = 9;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearDisableSecurity() {
+      
+      disableSecurity_ = false;
+      onChanged();
+      return this;
+    }
+
+    private org.wso2.choreo.connect.discovery.api.OperationPolicies policies_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.OperationPolicies, org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder, org.wso2.choreo.connect.discovery.api.OperationPoliciesOrBuilder> policiesBuilder_;
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     * @return Whether the policies field is set.
+     */
+    public boolean hasPolicies() {
+      return policiesBuilder_ != null || policies_ != null;
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     * @return The policies.
+     */
+    public org.wso2.choreo.connect.discovery.api.OperationPolicies getPolicies() {
+      if (policiesBuilder_ == null) {
+        return policies_ == null ? org.wso2.choreo.connect.discovery.api.OperationPolicies.getDefaultInstance() : policies_;
+      } else {
+        return policiesBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public Builder setPolicies(org.wso2.choreo.connect.discovery.api.OperationPolicies value) {
+      if (policiesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        policies_ = value;
+        onChanged();
+      } else {
+        policiesBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public Builder setPolicies(
+        org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder builderForValue) {
+      if (policiesBuilder_ == null) {
+        policies_ = builderForValue.build();
+        onChanged();
+      } else {
+        policiesBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public Builder mergePolicies(org.wso2.choreo.connect.discovery.api.OperationPolicies value) {
+      if (policiesBuilder_ == null) {
+        if (policies_ != null) {
+          policies_ =
+            org.wso2.choreo.connect.discovery.api.OperationPolicies.newBuilder(policies_).mergeFrom(value).buildPartial();
+        } else {
+          policies_ = value;
+        }
+        onChanged();
+      } else {
+        policiesBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public Builder clearPolicies() {
+      if (policiesBuilder_ == null) {
+        policies_ = null;
+        onChanged();
+      } else {
+        policies_ = null;
+        policiesBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder getPoliciesBuilder() {
+      
+      onChanged();
+      return getPoliciesFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.OperationPoliciesOrBuilder getPoliciesOrBuilder() {
+      if (policiesBuilder_ != null) {
+        return policiesBuilder_.getMessageOrBuilder();
+      } else {
+        return policies_ == null ?
+            org.wso2.choreo.connect.discovery.api.OperationPolicies.getDefaultInstance() : policies_;
+      }
+    }
+    /**
+     * <code>.wso2.discovery.api.OperationPolicies policies = 10;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.OperationPolicies, org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder, org.wso2.choreo.connect.discovery.api.OperationPoliciesOrBuilder> 
+        getPoliciesFieldBuilder() {
+      if (policiesBuilder_ == null) {
+        policiesBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            org.wso2.choreo.connect.discovery.api.OperationPolicies, org.wso2.choreo.connect.discovery.api.OperationPolicies.Builder, org.wso2.choreo.connect.discovery.api.OperationPoliciesOrBuilder>(
+                getPolicies(),
+                getParentForChildren(),
+                isClean());
+        policies_ = null;
+      }
+      return policiesBuilder_;
+    }
+
+    private org.wso2.choreo.connect.discovery.api.EndpointCluster endpoints_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder> endpointsBuilder_;
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     * @return Whether the endpoints field is set.
+     */
+    public boolean hasEndpoints() {
+      return endpointsBuilder_ != null || endpoints_ != null;
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     * @return The endpoints.
+     */
+    public org.wso2.choreo.connect.discovery.api.EndpointCluster getEndpoints() {
+      if (endpointsBuilder_ == null) {
+        return endpoints_ == null ? org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
+      } else {
+        return endpointsBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public Builder setEndpoints(org.wso2.choreo.connect.discovery.api.EndpointCluster value) {
+      if (endpointsBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        endpoints_ = value;
+        onChanged();
+      } else {
+        endpointsBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public Builder setEndpoints(
+        org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder builderForValue) {
+      if (endpointsBuilder_ == null) {
+        endpoints_ = builderForValue.build();
+        onChanged();
+      } else {
+        endpointsBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public Builder mergeEndpoints(org.wso2.choreo.connect.discovery.api.EndpointCluster value) {
+      if (endpointsBuilder_ == null) {
+        if (endpoints_ != null) {
+          endpoints_ =
+            org.wso2.choreo.connect.discovery.api.EndpointCluster.newBuilder(endpoints_).mergeFrom(value).buildPartial();
+        } else {
+          endpoints_ = value;
+        }
+        onChanged();
+      } else {
+        endpointsBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public Builder clearEndpoints() {
+      if (endpointsBuilder_ == null) {
+        endpoints_ = null;
+        onChanged();
+      } else {
+        endpoints_ = null;
+        endpointsBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder getEndpointsBuilder() {
+      
+      onChanged();
+      return getEndpointsFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    public org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder getEndpointsOrBuilder() {
+      if (endpointsBuilder_ != null) {
+        return endpointsBuilder_.getMessageOrBuilder();
+      } else {
+        return endpoints_ == null ?
+            org.wso2.choreo.connect.discovery.api.EndpointCluster.getDefaultInstance() : endpoints_;
+      }
+    }
+    /**
+     * <code>.wso2.discovery.api.EndpointCluster endpoints = 11;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder> 
+        getEndpointsFieldBuilder() {
+      if (endpointsBuilder_ == null) {
+        endpointsBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            org.wso2.choreo.connect.discovery.api.EndpointCluster, org.wso2.choreo.connect.discovery.api.EndpointCluster.Builder, org.wso2.choreo.connect.discovery.api.EndpointClusterOrBuilder>(
+                getEndpoints(),
+                getParentForChildren(),
+                isClean());
+        endpoints_ = null;
+      }
+      return endpointsBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

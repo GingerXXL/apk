@@ -43,6 +43,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: default
+      namespace: apk
       sectionName: httpslistener
   rules:
   - backendRefs:
@@ -84,6 +85,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: default
+      namespace: apk
       sectionName: httpslistener
   rules:
     - backendRefs:
@@ -118,6 +120,7 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: default
+      namespace: apk
       sectionName: httpslistener
   rules:
     - backendRefs:
@@ -128,12 +131,13 @@ spec:
         - path:
             type: PathPrefix
             value: /http-bin-api/1.0.8/get
+          method: POST
       filters:
         - type: URLRewrite
           urlRewrite:
             path:
               type: ReplacePrefixMatch
-              replacePrefixMatch: /get
+              replacePrefixMatch: /post
         - type: ResponseHeaderModifier
           responseHeaderModifier:
             set:
@@ -151,6 +155,38 @@ spec:
             group: dp.wso2.com
             kind: Authentication
             name: sand-http-bin-authentication
+    - backendRefs:
+        - group: dp.wso2.com
+          kind: Backend
+          name: mocky-backend
+      matches:
+        - path:
+            type: PathPrefix
+            value: /http-bin-api/1.0.8/get
+          method: GET
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplacePrefixMatch
+              replacePrefixMatch: /v3/f36bafe1-db20-47a6-86cd-92dfc7a4fff9
+        - type: ResponseHeaderModifier
+          responseHeaderModifier:
+            set:
+              - name: custom-response-header
+                value: myvalue
+            remove:
+              - access-control-allow-credentials
+        - type: RequestHeaderModifier
+          requestHeaderModifier:
+            set:
+              - name: custom-request-header
+                value: myvalue
+#        - type: ExtensionRef
+#          extensionRef:
+#            group: dp.wso2.com
+#            kind: Authentication
+#            name: sand-http-bin-authentication
 ---
 apiVersion: dp.wso2.com/v1alpha1
 kind: Scope

@@ -43,6 +43,17 @@ type HTTPRouteParams struct {
 	ResourceRateLimitPolicies map[string]dpv1alpha1.RateLimitPolicy
 }
 
+// OperationParams contains related parameters for creation of operations
+type OperationParams struct {
+	httpMethod      *gwapiv1b1.HTTPMethod
+	policies        OperationPolicies
+	authScheme      *dpv1alpha1.Authentication
+	securities      []map[string][]string
+	disableSecurity bool
+	ratelimitPolicy *RateLimitPolicy
+	endpoints       *EndpointCluster
+}
+
 // SetInfoHTTPRouteCR populates resources and endpoints of mgwSwagger. httpRoute.Spec.Rules.Matches
 // are used to create resources and httpRoute.Spec.Rules.BackendRefs are used to create EndpointClusters.
 func (swagger *MgwSwagger) SetInfoHTTPRouteCR(httpRoute *gwapiv1b1.HTTPRoute, httpRouteParams HTTPRouteParams) error {
@@ -237,17 +248,24 @@ func (swagger *MgwSwagger) SetInfoHTTPRouteCR(httpRoute *gwapiv1b1.HTTPRoute, ht
 				}
 			}
 		}
+		operationParams := OperationParams{
+			policies:        policies,
+			authScheme:      resourceAuthScheme,
+			securities:      securities,
+			disableSecurity: disabledSecurity,
+			ratelimitPolicy: parseRateLimitPolicyToInternal(resourceRatelimitPolicy),
+			endpoints: &EndpointCluster{
+				Endpoints: endPoints,
+			},
+		}
 		for _, match := range rule.Matches {
 			resourcePath := *match.Path.Value
+			operationParams.httpMethod = match.Method
 			resource := &Resource{path: resourcePath,
-				methods: getAllowedOperations(match.Method, policies, resourceAuthScheme, securities, disabledSecurity,
-					parseRateLimitPolicyToInternal(resourceRatelimitPolicy)),
+				methods:       getAllowedOperations(operationParams),
 				pathMatchType: *match.Path.Type,
 				hasPolicies:   hasPolicies,
 				iD:            uuid.New().String(),
-			}
-			resource.endpoints = &EndpointCluster{
-				Endpoints: endPoints,
 			}
 			resource.endpointSecurity = utils.GetPtrSlice(securityConfig)
 			resources = append(resources, resource)
@@ -484,27 +502,35 @@ func getSecurity(authScheme *dpv1alpha1.Authentication, scopes []string) ([]map[
 }
 
 // getAllowedOperations retuns a list of allowed operatons, if httpMethod is not specified then all methods are allowed.
-func getAllowedOperations(httpMethod *gwapiv1b1.HTTPMethod, policies OperationPolicies,
-	authScheme *dpv1alpha1.Authentication, securities []map[string][]string, disableSecurity bool,
-	ratelimitPolicy *RateLimitPolicy) []*Operation {
-	if httpMethod != nil {
-		return []*Operation{{iD: uuid.New().String(), method: string(*httpMethod), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy}}
+func getAllowedOperations(operationParams OperationParams) []*Operation {
+	if operationParams.httpMethod != nil {
+		return []*Operation{{iD: uuid.New().String(), method: string(*operationParams.httpMethod),
+			policies: operationParams.policies, disableSecurity: operationParams.disableSecurity,
+			security: operationParams.securities, RateLimitPolicy: operationParams.ratelimitPolicy,
+			endpoints: operationParams.endpoints}}
 	}
-	return []*Operation{{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodGet), policies: policies,
-		disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPost), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodDelete), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPatch), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPut), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodHead), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy},
-		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodOptions), policies: policies,
-			disableSecurity: disableSecurity, security: securities, RateLimitPolicy: ratelimitPolicy}}
+	return []*Operation{
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodGet), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPost), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodDelete), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPatch), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodPut), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodHead), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints},
+		{iD: uuid.New().String(), method: string(gwapiv1b1.HTTPMethodOptions), policies: operationParams.policies,
+			disableSecurity: operationParams.disableSecurity, security: operationParams.securities,
+			RateLimitPolicy: operationParams.ratelimitPolicy, endpoints: operationParams.endpoints}}
 }
 
 // SetInfoAPICR populates ID, ApiType, Version and XWso2BasePath of mgwSwagger.

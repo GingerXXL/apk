@@ -49,6 +49,12 @@ type Operation struct {
 	mockedAPIConfig  *api.MockedApiConfig
 	//todo(amali) refactor all vars to private/public vars
 	RateLimitPolicy *RateLimitPolicy
+	endpoints       *EndpointCluster
+}
+
+// GetEndpoints returns the endpoints object of a given resource.
+func (operation *Operation) GetEndpoints() *EndpointCluster {
+	return operation.endpoints
 }
 
 // SetMockedAPIConfigOAS3 generate mock impl endpoint configurations
@@ -275,7 +281,7 @@ func NewOperation(method string, security []map[string][]string, extensions map[
 	tier := ResolveThrottlingTier(extensions)
 	disableSecurity := ResolveDisableSecurity(extensions)
 	id := uuid.New().String()
-	return &Operation{id, method, security, tier, disableSecurity, extensions, OperationPolicies{}, &api.MockedApiConfig{}, nil}
+	return &Operation{id, method, security, tier, disableSecurity, extensions, OperationPolicies{}, &api.MockedApiConfig{}, nil, nil}
 }
 
 // NewOperationWithPolicies Creates and returns operation with given method and policies

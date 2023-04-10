@@ -347,7 +347,7 @@ var Mapper = map[int]logging.ErrorDetails{
 	},
 	error2212: {
 		ErrorCode: error2212,
-		Message:   "Error adding request policy %s to operation %s of resource %s. %v",
+		Message:   "Error adding request policy %s to operation %v of resource %s. %v",
 		Severity:  MINOR,
 	},
 	error2231: {
