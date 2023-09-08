@@ -64,7 +64,7 @@ public class JWTInfoDto {
         this.applicationTier = jwtInfoDto.getApplicationTier();
         this.apiContext = jwtInfoDto.getApiContext();
         this.apiName = jwtInfoDto.getApiName();
-        this.jwtValidationInfo = new JWTValidationInfo(jwtInfoDto.getJwtValidationInfo());
+//        this.jwtValidationInfo = new JWTValidationInfo(jwtInfoDto.getJwtValidationInfo());
         this.appAttributes = jwtInfoDto.getAppAttributes();
         this.sub = jwtInfoDto.getSub();
         this.organizations = SerializationUtils.clone(jwtInfoDto.getOrganizations());

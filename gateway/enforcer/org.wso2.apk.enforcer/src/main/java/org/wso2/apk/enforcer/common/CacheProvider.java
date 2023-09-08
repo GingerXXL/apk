@@ -24,6 +24,7 @@ import com.google.common.cache.LoadingCache;
 import org.wso2.apk.enforcer.commons.dto.JWTValidationInfo;
 import org.wso2.apk.enforcer.config.ConfigHolder;
 import org.wso2.apk.enforcer.config.dto.CacheDto;
+import org.wso2.apk.enforcer.security.jwt.CachedJWTInfo;
 import org.wso2.apk.enforcer.security.jwt.SignedJWTInfo;
 import org.wso2.apk.enforcer.security.jwt.validator.JWTConstants;
 
@@ -33,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * Class for initiating and returning caches.
  */
 public class CacheProvider {
-    private LoadingCache<String, SignedJWTInfo> gatewaySignedJWTParseCache;
+    private LoadingCache<String, CachedJWTInfo> gatewaySignedJWTParseCache;
     private LoadingCache<String, String> gatewayTokenCache;
     private LoadingCache<String, JWTValidationInfo> gatewayKeyCache;
     private LoadingCache<String, Boolean> invalidTokenCache;

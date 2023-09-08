@@ -26,41 +26,39 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import com.nimbusds.jwt.util.DateUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.wso2.apk.enforcer.commons.dto.JWTValidationInfo;
+import org.wso2.apk.enforcer.commons.exception.JWTGeneratorException;
+import org.wso2.apk.enforcer.commons.jwttransformer.JWTTransformer;
+import org.wso2.apk.enforcer.commons.exception.EnforcerException;
+import org.wso2.apk.enforcer.config.ConfigHolder;
+import org.wso2.apk.enforcer.config.dto.ExtendedTokenIssuerDto;
+import org.wso2.apk.enforcer.constants.APIConstants;
+import org.wso2.apk.enforcer.security.jwt.SignedJWTInfo;
+import org.wso2.apk.enforcer.util.JWKSClient;
+import org.wso2.apk.enforcer.util.JWTUtils;
+
 import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.interfaces.ECPublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.wso2.apk.enforcer.commons.dto.JWTValidationInfo;
-import org.wso2.apk.enforcer.commons.exception.EnforcerException;
-import org.wso2.apk.enforcer.commons.exception.JWTGeneratorException;
-import org.wso2.apk.enforcer.commons.jwttransformer.JWTTransformer;
-import org.wso2.apk.enforcer.config.ConfigHolder;
-import org.wso2.apk.enforcer.config.dto.ExtendedTokenIssuerDto;
-import org.wso2.apk.enforcer.constants.APIConstants;
-import org.wso2.apk.enforcer.security.jwt.CachedJWTInfo;
-import org.wso2.apk.enforcer.util.JWKSClient;
-import org.wso2.apk.enforcer.util.JWTUtils;
+import java.util.*;
 
 /**
  * Class responsible to validate jwt. This should validate the JWT signature, expiry time.
  * validating the sub, aud, iss can be made optional.
  */
-public class JWTValidator {
+public class OLDJWTValidator {
     private static final Logger logger = LogManager.getLogger(JWTValidator.class);
     private JWKSet jwkSet;
     JWTTransformer jwtTransformer;
     ExtendedTokenIssuerDto tokenIssuer;
     JWKSClient jwksClient;
 
-    public JWTValidator(ExtendedTokenIssuerDto tokenIssuer) throws EnforcerException {
+    public OLDJWTValidator(ExtendedTokenIssuerDto tokenIssuer) throws EnforcerException {
         jwtTransformer = ConfigHolder.getInstance().getConfig().getJwtTransformer(tokenIssuer.getIssuer());
         jwtTransformer.loadConfiguration(tokenIssuer);
         this.tokenIssuer = tokenIssuer;
@@ -74,21 +72,25 @@ public class JWTValidator {
         }
     }
 
-    public JWTValidationInfo validateToken(CachedJWTInfo cachedJWTInfo) throws EnforcerException {
+
+//    public JWTValidationInfo validateJWTToken(SignedJWTInfo signedJWTInfo) throws EnforcerException {
+//            return validateToken(signedJWTInfo);
+//    }
+
+    public JWTValidationInfo validateToken(SignedJWTInfo signedJWTInfo) throws EnforcerException {
         JWTValidationInfo jwtValidationInfo = new JWTValidationInfo();
         boolean state;
         try {
-            state = validateSignature(cachedJWTInfo.getSignedJWT());
+            state = validateSignature(signedJWTInfo.getSignedJWT());
             if (state) {
-                JWTClaimsSet jwtClaimsSet = cachedJWTInfo.getJwtClaimsSet();
+                JWTClaimsSet jwtClaimsSet = signedJWTInfo.getJwtClaimsSet();
                 state = validateTokenExpiry(jwtClaimsSet);
                 if (state) {
                     jwtValidationInfo.setConsumerKey(jwtTransformer.getTransformedConsumerKey(jwtClaimsSet));
                     jwtValidationInfo.setScopes(jwtTransformer.getTransformedScopes(jwtClaimsSet));
                     JWTClaimsSet transformedJWTClaimSet = jwtTransformer.transform(jwtClaimsSet);
                     createJWTValidationInfoFromJWT(jwtValidationInfo, transformedJWTClaimSet);
-                    // todo(amali) fix this
-//                    jwtValidationInfo.setRawPayload(cachedJWTInfo.getToken());
+                    jwtValidationInfo.setRawPayload(signedJWTInfo.getToken());
                     jwtValidationInfo.setKeyManager(tokenIssuer.getName());
                     return jwtValidationInfo;
                 } else {

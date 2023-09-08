@@ -270,9 +270,9 @@ public class JWTUtils {
         String issuer = signedJWTInfo.getJwtClaimsSet().getIssuer();
         JWTValidator jwtValidator = SubscriptionDataStoreImpl.getInstance().getJWTValidatorByIssuer(issuer,
                 organization);
-        if (jwtValidator != null) {
-            return jwtValidator.validateJWTToken(signedJWTInfo);
-        }
+//        if (jwtValidator != null) {
+//            return jwtValidator.validateJWTToken(signedJWTInfo);
+//        }
         jwtValidationInfo.setValid(false);
         jwtValidationInfo.setValidationCode(APIConstants.KeyValidationStatus.API_AUTH_INVALID_CREDENTIALS);
         log.info("No matching issuer found for the token with issuer : " + issuer);
