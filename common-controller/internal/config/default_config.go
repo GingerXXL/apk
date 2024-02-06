@@ -42,5 +42,21 @@ var defaultConfig = &Config{
 			RestPort:      18001,
 			RetryInterval: 5,
 			Persistence:   persistence{Type: "K8s"}},
+		Database: database{
+			Enabled:  true,
+			Name:     "DATAPLANE",
+			Username: "wso2carbon",
+			Password: "wso2carbon",
+			Host:     "wso2apk-db-service.apk",
+			Port:     5432,
+			PoolOptions: dbPool{
+				PoolMaxConns:              4,
+				PoolMinConns:              0,
+				PoolMaxConnLifetime:       "1h",
+				PoolMaxConnIdleTime:       "1h",
+				PoolHealthCheckPeriod:     "1m",
+				PoolMaxConnLifetimeJitter: "1s",
+			},
+		},
 	},
 }

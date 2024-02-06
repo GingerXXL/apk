@@ -48,6 +48,7 @@ type commoncontroller struct {
 	WebServer         webServer
 	InternalAPIServer internalAPIServer
 	ControlPlane      controlplane
+	Database          database
 }
 type controlplane struct {
 	Enabled             bool
@@ -101,4 +102,37 @@ type sts struct {
 
 type webServer struct {
 	Port int64
+}
+
+type database struct {
+	Enabled     bool
+	Name        string
+	Username    string
+	Password    string
+	Host        string
+	Port        int
+	PoolOptions dbPool
+}
+
+type dbPool struct {
+	// PoolMaxConns is the maximum size of the pool. The default is the greater of 4 or runtime.NumCPU()
+	PoolMaxConns int
+
+	// PoolMinConns is the minimum size of the pool. After connection closes, the pool might dip below MinConns. A low
+	// number of MinConns might mean the pool is empty after MaxConnLifetime until the health check has a chance
+	// to create new connections.
+	PoolMinConns int
+
+	// PoolMaxConnLifetime is the duration since creation after which a connection will be automatically closed.
+	PoolMaxConnLifetime string
+
+	// PoolMaxConnIdleTime is the duration after which an idle connection will be automatically closed by the health check.
+	PoolMaxConnIdleTime string
+
+	// HealthCheckPeriod is the duration between checks of the health of idle connections.
+	PoolHealthCheckPeriod string
+
+	// PoolMaxConnLifetimeJitter is the duration after MaxConnLifetime to randomly decide to close a connection.
+	// This helps prevent all connections from being closed at the exact same time, starving the pool.
+	PoolMaxConnLifetimeJitter string
 }
