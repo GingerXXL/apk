@@ -29,6 +29,7 @@ import (
 	cache "github.com/wso2/apk/common-controller/internal/cache"
 	"github.com/wso2/apk/common-controller/internal/config"
 	"github.com/wso2/apk/common-controller/internal/controlplane"
+	"github.com/wso2/apk/common-controller/internal/database"
 	"github.com/wso2/apk/common-controller/internal/loggers"
 	cpcontrollers "github.com/wso2/apk/common-controller/internal/operator/controllers/cp"
 	dpcontrollers "github.com/wso2/apk/common-controller/internal/operator/controllers/dp"
@@ -142,18 +143,23 @@ func InitOperator() {
 		loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3114, logging.MAJOR,
 			"Error creating JWT Issuer controller, error: %v", err))
 	}
-	if err := cpcontrollers.NewApplicationController(mgr, subscriptionStore); err != nil {
-		loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3115, logging.MAJOR,
-			"Error creating Application controller, error: %v", err))
+
+	config := config.ReadConfigs()
+	if config.CommonController.ControlPlane.Enabled && config.CommonController.ControlPlane.Persistence.Type == "K8s" {
+		if err := cpcontrollers.NewApplicationController(mgr, subscriptionStore); err != nil {
+			loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3115, logging.MAJOR,
+				"Error creating Application controller, error: %v", err))
+		}
+		if err := cpcontrollers.NewSubscriptionController(mgr, subscriptionStore); err != nil {
+			loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3116, logging.MAJOR,
+				"Error creating Subscription controller, error: %v", err))
+		}
+		if err := cpcontrollers.NewApplicationMappingController(mgr, subscriptionStore); err != nil {
+			loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3117, logging.MAJOR,
+				"Error creating Application Mapping controller, error: %v", err))
+		}
 	}
-	if err := cpcontrollers.NewSubscriptionController(mgr, subscriptionStore); err != nil {
-		loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3116, logging.MAJOR,
-			"Error creating Subscription controller, error: %v", err))
-	}
-	if err := cpcontrollers.NewApplicationMappingController(mgr, subscriptionStore); err != nil {
-		loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error3117, logging.MAJOR,
-			"Error creating Application Mapping controller, error: %v", err))
-	}
+
 	//+kubebuilder:scaffold:builder
 
 	if err := mgr.AddHealthzCheck("healthz", healthz.Ping); err != nil {
@@ -164,14 +170,17 @@ func InitOperator() {
 		loggers.LoggerAPKOperator.ErrorC(logging.PrintError(logging.Error2603, logging.BLOCKER, "Unable to set up ready check: %v", err))
 		os.Exit(1)
 	}
-	config := config.ReadConfigs()
+
 	if config.CommonController.ControlPlane.Enabled {
 		go func() {
 			var controlPlane controlplane.ArtifactDeployer
 			if config.CommonController.ControlPlane.Persistence.Type == "K8s" {
 				controlPlane = controlplane.NewK8sArtifactDeployer(mgr)
 
+			} else if config.CommonController.ControlPlane.Persistence.Type == "DB" {
+				controlPlane = database.NewDBArtifactDeployer(mgr)
 			}
+
 			grpcClient := controlplane.NewControlPlaneAgent(config.CommonController.ControlPlane.Host, config.CommonController.ControlPlane.EventPort, controlPlaneID, controlPlane)
 			if grpcClient != nil {
 				grpcClient.StartEventStreaming()

@@ -43,7 +43,7 @@ var defaultConfig = &Config{
 			RetryInterval: 5,
 			Persistence:   persistence{Type: "K8s"}},
 		Database: database{
-			Enabled:  true,
+			Enabled:  false,
 			Name:     "DATAPLANE",
 			Username: "wso2carbon",
 			Password: "wso2carbon",
