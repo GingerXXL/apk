@@ -25,17 +25,17 @@ import (
 
 // getEnvironmentsToBeDeleted returns an slice of environments APIs to be u-deployed from
 // by considering existing environments list and environments that APIs are wished to be un-deployed
-func getEnvironmentsToBeDeleted(existingEnvs, deleteEnvs []string) (toBeDel []string, toBeKept []string) {
-	toBeDel = make([]string, 0, len(deleteEnvs))
-	toBeKept = make([]string, 0, len(deleteEnvs))
+func getEnvironmentsToBeDeleted(existingGatewayNames, deleteGatewayNames []string) (toBeDel []string, toBeKept []string) {
+	toBeDel = make([]string, 0, len(deleteGatewayNames))
+	toBeKept = make([]string, 0, len(deleteGatewayNames))
 
 	// if deleteEnvs is empty (deleteEnvs wished to be deleted), delete all environments
-	if len(deleteEnvs) == 0 {
-		return existingEnvs, []string{}
+	if len(deleteGatewayNames) == 0 {
+		return existingGatewayNames, []string{}
 	}
 	// otherwise delete env if it wished to
-	for _, existingEnv := range existingEnvs {
-		if stringutils.StringInSlice(existingEnv, deleteEnvs) {
+	for _, existingEnv := range existingGatewayNames {
+		if stringutils.StringInSlice(existingEnv, deleteGatewayNames) {
 			toBeDel = append(toBeDel, existingEnv)
 		} else {
 			toBeKept = append(toBeKept, existingEnv)

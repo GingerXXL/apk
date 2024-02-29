@@ -40,7 +40,7 @@ func undeployRestAPIInGateway(apiState APIState) error {
 	if err != nil {
 		loggers.LoggerXds.ErrorC(logging.PrintError(logging.Error2630, logging.MAJOR, "Error undeploying prod httpRoute of API : %v in Organization %v from environments %v."+
 			" Hence not checking on deleting the sand httpRoute of the API", string(apiState.APIDefinition.ObjectMeta.UID), apiState.APIDefinition.Spec.Organization,
-			getLabelsForAPI(apiState.ProdHTTPRoute.HTTPRouteCombined)))
+			getGatewayNameForAPI(apiState.ProdHTTPRoute.HTTPRouteCombined)))
 		return err
 	}
 	if apiState.SandHTTPRoute != nil {
@@ -97,7 +97,7 @@ func GenerateAdapterInternalAPI(apiState APIState, httpRoute *HTTPRouteState, en
 		return nil, nil, err
 	}
 	vHosts := getVhostsForAPI(httpRoute.HTTPRouteCombined)
-	labels := getLabelsForAPI(httpRoute.HTTPRouteCombined)
+	labels := getGatewayNameForAPI(httpRoute.HTTPRouteCombined)
 	listeners, relativeSectionNames := getListenersForAPI(httpRoute.HTTPRouteCombined, adapterInternalAPI.UUID)
 	// We dont have a use case where a perticular API's two different http routes refer to two different gateway. Hence get the first listener name for the list for processing.
 	if len(listeners) == 0 || len(relativeSectionNames) == 0 {
@@ -133,8 +133,9 @@ func getVhostsForAPI(httpRoute *gwapiv1b1.HTTPRoute) []string {
 	return vHosts
 }
 
-// getLabelsForAPI returns the labels related to an API.
-func getLabelsForAPI(httpRoute *gwapiv1b1.HTTPRoute) []string {
+// todo(amali) make this return map[string]struct{} instead of []string
+// getGatewayNameForAPI returns the labels related to an API.
+func getGatewayNameForAPI(httpRoute *gwapiv1b1.HTTPRoute) []string {
 	var labels []string
 	var err error
 	for _, parentRef := range httpRoute.Spec.ParentRefs {
@@ -178,8 +179,11 @@ func getListenersForAPI(httpRoute *gwapiv1b1.HTTPRoute, apiUUID string) ([]strin
 }
 
 func deleteAPIFromEnv(httpRoute *gwapiv1b1.HTTPRoute, apiState APIState) error {
-	labels := getLabelsForAPI(httpRoute)
-	org := apiState.APIDefinition.Spec.Organization
+	labels := getGatewayNameForAPI(httpRoute)
+	gatewayNames := make(map[string]struct{})
+	for _, label := range labels {
+		gatewayNames[label] = struct{}{}
+	}
 	uuid := string(apiState.APIDefinition.ObjectMeta.UID)
-	return xds.DeleteAPICREvent(labels, uuid, org)
+	return xds.DeleteAPI(uuid, gatewayNames)
 }

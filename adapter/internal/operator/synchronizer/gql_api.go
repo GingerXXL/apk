@@ -133,10 +133,7 @@ func getListenersForGQLAPI(gqlRoute *v1alpha2.GQLRoute, apiUUID string) ([]strin
 		if found {
 			// find the matching listener
 			matchedListener, listenerFound := common.FindElement(gateway.Spec.Listeners, func(listener gwapiv1b1.Listener) bool {
-				if string(listener.Name) == string(*parentRef.SectionName) {
-					return true
-				}
-				return false
+				return string(listener.Name) == string(*parentRef.SectionName)
 			})
 			if listenerFound {
 				sectionNames = append(sectionNames, string(matchedListener.Name))
@@ -151,9 +148,12 @@ func getListenersForGQLAPI(gqlRoute *v1alpha2.GQLRoute, apiUUID string) ([]strin
 
 func deleteGQLAPIFromEnv(gqlRoute *v1alpha2.GQLRoute, apiState APIState) error {
 	labels := getLabelsForGQLAPI(gqlRoute)
-	org := apiState.APIDefinition.Spec.Organization
 	uuid := string(apiState.APIDefinition.ObjectMeta.UID)
-	return xds.DeleteAPICREvent(labels, uuid, org)
+	gatewayNames := make(map[string]struct{})
+	for _, label := range labels {
+		gatewayNames[label] = struct{}{}
+	}
+	return xds.DeleteAPI(uuid, gatewayNames)
 }
 
 // undeployGQLAPIInGateway undeploys the related API in CREATE and UPDATE events.

@@ -122,7 +122,11 @@ func TestUpdateAPICache(t *testing.T) {
 						GenerateIdentifierForAPIWithUUID(vhsot, test.adapterInternalAPI.UUID), true)
 				}
 			case "DELETE":
-				DeleteAPICREvent(test.labels, test.adapterInternalAPI.UUID, test.adapterInternalAPI.OrganizationID)
+				gatewayNames := make(map[string]struct{})
+				for _, label := range test.labels {
+					gatewayNames[label] = struct{}{}
+				}
+				DeleteAPI(test.adapterInternalAPI.UUID, gatewayNames)
 				prodIdentifier := GetvHostsIdentifier(test.adapterInternalAPI.UUID, "prod")
 				sandIdentifier := GetvHostsIdentifier(test.adapterInternalAPI.UUID, "sand")
 				_, prodExists := orgIDAPIvHostsMap[test.adapterInternalAPI.OrganizationID][prodIdentifier]
